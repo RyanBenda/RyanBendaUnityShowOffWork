@@ -542,18 +542,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c18eeea66cdf543a75a7f74b0ebe78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MoveSpeed: 1000000
-  m_InterpolationSpeed: 1
-  m_CanJump: 0
-  m_JumpForce: 5
-  m_Grounded: 0
-  m_GroundedCheckHalfExtents: {x: 0, y: 0, z: 0}
-  m_GroundedCheckDist: 1
+  m_MoveSpeed: 5
+  m_CanJump: 1
+  m_JumpForce: 350000
+  m_Grounded: 1
+  m_GroundedCheckHalfExtents: {x: 0.5, y: 0.5, z: 0.5}
+  m_GroundedCheckDist: 0.4976
   m_MaxJumps: 1
-  m_CustomDrag: 0.1
-  m_LessAirDrag: 1
-  canSprint: 0
-  m_SprintSpeedMultiplier: 2
+  m_CustomDrag: 10000
+  m_LessAirDrag: 10
+  canSprint: 1
+  m_SprintSpeedMultiplier: 1.5
   TripShotPrefab: {fileID: 0}
   TripShotGhostPrefab: {fileID: 0}
   TripShotHandHeldPrefab: {fileID: 0}
@@ -569,6 +568,7 @@ MonoBehaviour:
   _CurrentTool: {fileID: 0}
   _PlayerState: 0
   _ToolManager: {fileID: 0}
+  moving: 0
 --- !u!20 &2603548509687062234
 Camera:
   m_ObjectHideFlags: 0
@@ -704,8 +704,8 @@ MonoBehaviour:
   m_CameraDefaultLocation: {fileID: 0}
   m_MouseXSensitivity: 1
   m_MouseYSensitivity: 1
-  m_MaxCameraHeightClamp: 90
-  m_MinCameraHeightClamp: -90
+  m_MaxCameraHeightClamp: 55
+  m_MinCameraHeightClamp: -80
   m_InvertCamY: 0
   m_SphereCastRadius: 0.1
   m_SphereCastRadius2: 0.49

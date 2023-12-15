@@ -49,7 +49,7 @@ public class CreatureBrain : MonoBehaviour
     Vector3 _Dir;
     float _T;
     public LayerMask _ThrowDirection;
-    //public GhostRoom _CurRoom;
+    public GhostRoom _CurRoom;
 
     bool _WaitTillNewHit = false;
     float _WaitASec = 0;

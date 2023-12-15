@@ -8,7 +8,7 @@ public class PhysicsPlayerController : MonoBehaviour
 
     bool m_NewMovement;
 
-    public float m_InterpolationSpeed;
+    //public float m_InterpolationSpeed;
 
     public bool m_CanJump = false;
     public float m_JumpForce = 5;
@@ -52,6 +52,7 @@ public class PhysicsPlayerController : MonoBehaviour
     public Tool _CurrentTool;
     public PlayerStates _PlayerState;
     public ToolManager _ToolManager;
+    public bool moving;
 
     private void Awake()
     {
@@ -102,7 +103,7 @@ public class PhysicsPlayerController : MonoBehaviour
         cameraForwardCopy += camUpNormalized * moveDir.z;
         cameraForwardCopy += camRightNormalized * moveDir.x;
 
-        Vector3 force = cameraForwardCopy.normalized * m_MoveSpeed * Time.deltaTime;
+        Vector3 force = cameraForwardCopy.normalized * (m_MoveSpeed * 1000000) * Time.deltaTime;
 
         if (canSprint && Input.GetKey(KeyCode.LeftShift))
             force *= m_SprintSpeedMultiplier;
@@ -129,7 +130,7 @@ public class PhysicsPlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!m_tripShotPlaced)
+       /* if (!m_tripShotPlaced)
         {
             if (!m_EnabledTripShot)
             {
@@ -201,7 +202,7 @@ public class PhysicsPlayerController : MonoBehaviour
                     m_EnabledTripShot = false;
                 }
             }
-        }
+        }*/
     }
 
     Vector3 calcMoveRot()
