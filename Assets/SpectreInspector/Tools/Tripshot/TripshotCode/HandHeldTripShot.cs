@@ -6,63 +6,53 @@ using UnityEngine.InputSystem;
 
 public class HandHeldTripShot : PlaceableTool
 {
-
     public Animator _ToolAnimator;
 
     public TripShotTool _Tripshot;
-    public Transform _TripshotHandModelTransform;
+    [SerializeField] private Transform _TripshotHandModelTransform;
 
     bool _PreventSwap;
     Vector3 _Normal;
 
-    public List<GameObject> _OtherTools = new List<GameObject>();
-    //public HotBarPos _ToolSlot;
+    public HotBarPos _ToolSlot;
 
 
-    public PhysicsPlayerController playerControl;
+    [SerializeField] private PhysicsPlayerController _PlayerControl;
 
-    public LayerMask _PlaceLayerMask;
+    [SerializeField] private LayerMask _PlaceLayerMask;
 
     bool _CanPlace = false;
 
     [SerializeField] private PlayerInput _PlayerInput;
 
-    private void Awake()
-    {
-
-    }
 
     private void OnEnable()
     {
-        if (playerControl == null)
+        if (_PlayerControl == null)
         {
-            playerControl = FindObjectOfType<PhysicsPlayerController>();
+            _PlayerControl = FindObjectOfType<PhysicsPlayerController>();
         }
 
         if (_PlayerInput == null)
         {
-            //_PlayerInput = playerControl.playerInput;
+            _PlayerInput = _PlayerControl._PlayerInput;
         }
 
         NewInputSetup();
 
 
-
-
-        //PlayerControl playerControl = Camera.main.transform.parent.GetComponent<PlayerControl>();
-
-        if (playerControl._CurrentTool == null || playerControl._CurrentTool.GetComponent<TripShotTool>() == null)
+        if (ToolManager.instance._CurrentTool == null || ToolManager.instance._CurrentTool.GetComponent<TripShotTool>() == null)
         {
 
             bool _delayToolSwap = false;
-            if (playerControl._CurrentTool != null && playerControl._CurrentTool != this)
+            if (ToolManager.instance._CurrentTool != null && ToolManager.instance._CurrentTool != this)
             {
-                playerControl._CurrentTool._SwappingTool = this;
+                ToolManager.instance._CurrentTool._SwappingTool = this;
 
-                if (playerControl._CurrentTool.gameObject.GetComponent<GoggleTool>() || playerControl._CurrentTool.gameObject.GetComponent<TrackerTool>())
+                if (ToolManager.instance._CurrentTool.GetComponent<GoggleTool>() || ToolManager.instance._CurrentTool.GetComponent<CameraTool>())
                     _delayToolSwap = true;
 
-                playerControl._CurrentTool.Unequip();
+                ToolManager.instance._CurrentTool.Unequip();
 
                 if (_delayToolSwap)
                 {
@@ -74,17 +64,17 @@ public class HandHeldTripShot : PlaceableTool
 
             if (!_PreventSwap)
             {
-                //_ToolSlot.TweenUp();
-                //_ToolSlot.MoveArrow(0);
+                _ToolSlot.TweenUp();
+                _ToolSlot.MoveArrow(0);
 
 
-                if (playerControl._ToolManager._CurTripShot == null)
+                if (ToolManager.instance._CurTripShot == null)
                 {
 
 
                     //Debug.Log("Awoken");
-                    playerControl._CurrentTool = this;
-                    playerControl._HoldingTool = true;
+                    ToolManager.instance._CurrentTool = this;
+                    ToolManager.instance._HoldingTool = true;
                     _ToolSelected = true;
 
                     //this.transform.localEulerAngles = new Vector3(this.transform.localEulerAngles.x + _HandHeldRot.x, this.transform.localEulerAngles.y + _HandHeldRot.y, this.transform.localEulerAngles.z + _HandHeldRot.z);
@@ -94,20 +84,21 @@ public class HandHeldTripShot : PlaceableTool
 
                     playEquipSound();
 
-                    for (int i = 0; i < _OtherTools.Count; i++)
+                    foreach (Tool tool in ToolManager.instance._HandToolsList)
                     {
-                        _OtherTools[i].gameObject.SetActive(false);
+                        if (tool != null & tool != this)
+                            tool.gameObject.SetActive(false);
                     }
 
                     _ToolAnimator.SetBool("PickingUp", true);
                 }
                 else
                 {
-                    Tool curTool = playerControl._ToolManager._CurTripShot;
+                    Tool curTool = ToolManager.instance._CurTripShot;
                     curTool._ToolSelected = true;
                     //curTool.GetComponent<TripShotTool>()._TripShotTool = playerControl._ToolManager._CurTripShot.gameObject;
-                    playerControl._CurrentTool = curTool;
-                    playerControl._CurrentTool.Equip();
+                    ToolManager.instance._CurrentTool = curTool;
+                    ToolManager.instance._CurrentTool.Equip();
 
                     this.gameObject.SetActive(false);
                 }
@@ -163,22 +154,21 @@ public class HandHeldTripShot : PlaceableTool
 
         base.Unequip();
 
+        _ToolSlot.TweenDown();
+
+        if (_SwappingTool == null)
+        {
+            _ToolSlot.PopArrow();
+        }
+
         if (_ToolGhost)
             Destroy(_ToolGhost);
 
-        //Camera.main.transform.parent.GetComponent<PlayerControl>()._CurrentTool._ToolSelected = false;
-        //Camera.main.transform.parent.GetComponent<PlayerControl>()._CurrentTool = null;
-
-        playerControl._CurrentTool._ToolSelected = false;
-        //transform.root.GetComponent<PlayerControl>()._CurrentTool = null;
-        playerControl._HoldingTool = false;
-
-
-        //Destroy(this.gameObject);
+        ToolManager.instance._CurrentTool._ToolSelected = false;
+        ToolManager.instance._HoldingTool = false;
 
         playUnequipSound();
         _ToolAnimator.SetBool("Unequiping", true);
-        //this.gameObject.SetActive(false);
     }
 
     
@@ -199,7 +189,7 @@ public class HandHeldTripShot : PlaceableTool
 
     public override void PlaceTool()
     {
-        if (!_ToolPlaced && _ToolGhost != null && playerControl._PlayerState == PlayerStates.PlayState)
+        if (!_ToolPlaced && _ToolGhost != null && _PlayerControl._PlayerState == PlayerStates.PlayState)
         {
             GameObject tripShotTool = Instantiate(_ToolPrefab);
             TripShotTool TripShotScript = tripShotTool.GetComponent<TripShotTool>();
@@ -211,13 +201,13 @@ public class HandHeldTripShot : PlaceableTool
 
             TripShotScript._FinalPos = _ToolGhost.transform.position;
             TripShotScript._FinalNorm = _Normal;
-            TripShotScript._PlayerControl = playerControl;
+            TripShotScript._PlayerControl = _PlayerControl;
 
 
 
-            TripShotScript._FinalFor = playerControl.transform.forward;
+            TripShotScript._FinalFor = _PlayerControl.transform.forward;
                 //Camera.main.transform.root.forward;
-            tripShotTool.transform.forward = playerControl.transform.forward;
+            tripShotTool.transform.forward = _PlayerControl.transform.forward;
             //Camera.main.transform.root.forward;
 
             //tripShotTool.GetComponent<TripShotTool>().BeginLerp();
@@ -230,16 +220,16 @@ public class HandHeldTripShot : PlaceableTool
             //tripShotTool.GetComponent<TripShotTool>()._ToolPlaced = true;
             TripShotScript._ToolGhostExists = false;
             //tripShotTool.GetComponent<TripShotTool>()._TripShotTool = tripShotTool;
-            TripShotScript._ToolManager = playerControl._ToolManager;
+            //TripShotScript._ToolManager = playerControl._ToolManager;
 
 
 
-            playerControl._ToolManager._CurTripShot = TripShotScript;
+            ToolManager.instance._CurTripShot = TripShotScript;
 
             _ToolGhostExists = false;
             Destroy(_ToolGhost);
 
-            playerControl._CurrentTool = TripShotScript;
+            ToolManager.instance._CurrentTool = TripShotScript;
 
             _Tripshot = TripShotScript;
 
@@ -247,7 +237,7 @@ public class HandHeldTripShot : PlaceableTool
 
             //tripShotTool.GetComponent<TripShotTool>().Equip();
             TripShotScript._HandHeldTripShot = this;
-            playerControl._HoldingTool = false;
+            ToolManager.instance._HoldingTool = false;
 
             //this.gameObject.SetActive(false);
             _ToolSelected = false;

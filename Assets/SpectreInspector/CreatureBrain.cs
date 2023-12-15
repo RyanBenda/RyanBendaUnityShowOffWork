@@ -57,14 +57,14 @@ public class CreatureBrain : MonoBehaviour
 
     private void OnDestroy()
     {
-        TrackerTool.CameraInstance._Creatures.Remove(this);
+        CameraTool.CameraInstance._Creatures.Remove(this);
     }
 
     public bool IsInFrustumPlanes()
     {
         var bounds = GetComponent<Collider>().bounds;
 
-        if (GeometryUtility.TestPlanesAABB(TrackerTool.CameraInstance.planes, bounds))
+        if (GeometryUtility.TestPlanesAABB(CameraTool.CameraInstance.planes, bounds))
         {
             return true;
         }
@@ -79,7 +79,7 @@ public class CreatureBrain : MonoBehaviour
             _Player = GameObject.FindGameObjectWithTag("Player");
 
         }
-        TrackerTool.CameraInstance._Creatures.Add(this);
+        CameraTool.CameraInstance._Creatures.Add(this);
     }
 
 

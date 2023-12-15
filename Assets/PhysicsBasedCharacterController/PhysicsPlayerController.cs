@@ -30,10 +30,10 @@ public class PhysicsPlayerController : MonoBehaviour
 
     Rigidbody playerRigidbody;
 
-    public bool _HoldingTool;
-    public Tool _CurrentTool;
+    //public bool _HoldingTool;
+    //public Tool _CurrentTool;
     public PlayerStates _PlayerState;
-    public ToolManager _ToolManager;
+    //public ToolManager _ToolManager;
     public bool moving;
 
     private void Awake()

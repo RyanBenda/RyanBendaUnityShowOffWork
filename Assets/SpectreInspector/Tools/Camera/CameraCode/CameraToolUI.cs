@@ -14,13 +14,13 @@ public class CameraToolUI : MonoBehaviour
     public GameObject _TopShutter;
     public GameObject _BottomShutter;
 
-    public TrackerTool _Camera;
+    public CameraTool _Camera;
     public bool _Inuse;
 
     private void Awake()
     {
         if (_Camera == null)
-            _Camera = FindObjectOfType<TrackerTool>();
+            _Camera = FindObjectOfType<CameraTool>();
     }
 
     // Start is called before the first frame update

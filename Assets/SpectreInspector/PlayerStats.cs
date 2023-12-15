@@ -16,7 +16,6 @@ public class PlayerStats : MonoBehaviour
     public static PlayerStats instance;
 
     Vector3 _PlayerStartPos;
-    public ToolManager toolManager;
     public PhysicsPlayerController player;
 
     public Image _FadeToBlack;
@@ -50,11 +49,6 @@ public class PlayerStats : MonoBehaviour
         if(playerUI == null)
         {
             playerUI = FindObjectOfType<PlayerUI>();
-        }
-
-        if (toolManager == null)
-        {
-            toolManager = FindObjectOfType<ToolManager>();
         }
 
         if (player == null)
@@ -141,27 +135,27 @@ public class PlayerStats : MonoBehaviour
 
     void ResetTools()
     {
-        if (toolManager._CurTrapTool != null)
+        if (ToolManager.instance._CurTrapTool != null)
         {
-            toolManager._CurTrapTool.RetrieveTrap();
+            ToolManager.instance._CurTrapTool.RetrieveTrap();
         }
 
 
 
-        if (player._CurrentTool != null)
+        if (ToolManager.instance._CurrentTool != null)
         {
-            if (player._CurrentTool.GetComponent<TrackerTool>())
+            if (ToolManager.instance._CurrentTool.GetComponent<CameraTool>())
             {
-                TrackerTool cam = player._CurrentTool.GetComponent<TrackerTool>();
+                CameraTool cam = ToolManager.instance._CurrentTool.GetComponent<CameraTool>();
 
                 cam._CameraToolUI.SetActive(false);
                 cam._StandardUI.SetActive(true);
                 cam.UnequipCamera();
             }
 
-            if (player._CurrentTool.GetComponent<GoggleTool>())
+            if (ToolManager.instance._CurrentTool.GetComponent<GoggleTool>())
             {
-                GoggleTool goggle = player._CurrentTool.GetComponent<GoggleTool>();
+                GoggleTool goggle = ToolManager.instance._CurrentTool.GetComponent<GoggleTool>();
 
                 goggle._GoggleScan.SetActive(false);
 
@@ -175,11 +169,11 @@ public class PlayerStats : MonoBehaviour
 
            
 
-            if (player._CurrentTool != null)
+            if (ToolManager.instance._CurrentTool != null)
             {
-                player._CurrentTool.Unequip();
-                player._CurrentTool.gameObject.SetActive(false);
-                player._CurrentTool = null;
+                ToolManager.instance._CurrentTool.Unequip();
+                ToolManager.instance._CurrentTool.gameObject.SetActive(false);
+                ToolManager.instance._CurrentTool = null;
             }
         }
     }

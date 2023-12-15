@@ -48,14 +48,14 @@ public class HandHeldTrap : PlaceableTool
 
 
         bool _delayToolSwap = false;
-        if (playerControl._CurrentTool != null && playerControl._CurrentTool != this)
+        if (ToolManager.instance._CurrentTool != null && ToolManager.instance._CurrentTool != this)
         {
-            playerControl._CurrentTool._SwappingTool = this;
+            ToolManager.instance._CurrentTool._SwappingTool = this;
 
-            if (playerControl._CurrentTool.gameObject.GetComponent<GoggleTool>() || playerControl._CurrentTool.gameObject.GetComponent<TrackerTool>())
+            if (ToolManager.instance._CurrentTool.GetComponent<GoggleTool>() || ToolManager.instance._CurrentTool.GetComponent<CameraTool>())
                 _delayToolSwap = true;
 
-            playerControl._CurrentTool.Unequip();
+            ToolManager.instance._CurrentTool.Unequip();
 
             if (_delayToolSwap)
             {
@@ -71,12 +71,12 @@ public class HandHeldTrap : PlaceableTool
             //_ToolSlot.TweenUp();
             //_ToolSlot.MoveArrow(1);
 
-            if (playerControl._ToolManager._CurTrapTool == null)
+            if (ToolManager.instance._CurTrapTool == null)
             {
-                
 
-                playerControl._CurrentTool = this;
-                playerControl._HoldingTool = true;
+
+                ToolManager.instance._CurrentTool = this;
+                ToolManager.instance._HoldingTool = true;
                 _ToolSelected = true;
 
                 base.Equip();
@@ -91,11 +91,11 @@ public class HandHeldTrap : PlaceableTool
             }
             else
             {
-                Tool curTool = playerControl._ToolManager._CurTrapTool;
+                Tool curTool = ToolManager.instance._CurTrapTool;
                 curTool._ToolSelected = true;
                 curTool.GetComponent<TrapTool>().CallEnable();
-                playerControl._CurrentTool = curTool;
-                playerControl._CurrentTool.Equip();
+                ToolManager.instance._CurrentTool = curTool;
+                ToolManager.instance._CurrentTool.Equip();
 
                 this.gameObject.SetActive(false);
             }
@@ -130,12 +130,12 @@ public class HandHeldTrap : PlaceableTool
         if (_ToolGhost)
             Destroy(_ToolGhost);
 
-        if (playerControl._CurrentTool != null)
+        if (ToolManager.instance._CurrentTool != null)
         {
-            playerControl._CurrentTool._ToolSelected = false;
+            ToolManager.instance._CurrentTool._ToolSelected = false;
             //transform.root.GetComponent<PlayerControl>()._CurrentTool = null;
         }
-        playerControl._HoldingTool = false;
+        ToolManager.instance._HoldingTool = false;
 
         //this.gameObject.SetActive(false);
 
@@ -162,16 +162,16 @@ public class HandHeldTrap : PlaceableTool
             trapToolScript._FinalNorm = _Normal;
 
             trapToolScript._ToolGhostExists = false;
-            trapToolScript._ToolManager = playerControl._ToolManager;
+            //trapToolScript._ToolManager = playerControl._ToolManager;
             trapToolScript.playerControl = playerControl;
             //trapToolScript._GPG = GravPolt_Gun;
-            playerControl._ToolManager._CurTrapTool = trapToolScript;
+            ToolManager.instance._CurTrapTool = trapToolScript;
 
             _ToolGhostExists = false;
             Destroy(_ToolGhost);
 
-            playerControl._CurrentTool = trapToolScript;
-            playerControl._HoldingTool = false;
+            ToolManager.instance._CurrentTool = trapToolScript;
+            ToolManager.instance._HoldingTool = false;
 
             base.Unequip();
 

@@ -11,12 +11,6 @@ public class HotbarComponent : MonoBehaviour
     [SerializeField] private GameObject _GoggleSlot;
     [SerializeField] private GameObject _CameraSlot;
 
-    [SerializeField] private HandHeldTripShot _HandTripshot;
-    [SerializeField] private HandHeldTrap _HandTrap;
-    [SerializeField] private GoggleTool _HandGoggle;
-    [SerializeField] private TrackerTool _HandCamera;
-
-
     [SerializeField] private PhysicsPlayerController _PC;
     private PlayerInput _PlayerInput;
 
@@ -68,28 +62,28 @@ public class HotbarComponent : MonoBehaviour
     {
         if (_PC._PlayerState != PlayerStates.DeathState)
         {
-            _ElecTripSlot.gameObject.SetActive(true);
+            ToolManager.instance._HandHeldTripShot.gameObject.SetActive(true);
         }
     }
     private void OnToolSwitchTrap(InputAction.CallbackContext obj)
     {
         if (_PC._PlayerState != PlayerStates.DeathState)
         {
-            _HandTrap.gameObject.SetActive(true);
+            ToolManager.instance._HandHeldTrap.gameObject.SetActive(true);
         }
     }
     private void OnToolGoggle(InputAction.CallbackContext obj)
     {
         if (_PC._PlayerState != PlayerStates.DeathState)
         {
-            _HandGoggle.gameObject.SetActive(true); // needs to be changed...
+            ToolManager.instance._GoggleTool.gameObject.SetActive(true);
         }
     }
     private void OnToolCamera(InputAction.CallbackContext obj)
     {
         if (_PC._PlayerState != PlayerStates.DeathState)
         {
-            _HandCamera.gameObject.SetActive(true); // needs to be changed...
+            ToolManager.instance._CurCameraTool.gameObject.SetActive(true);
         }
     }
 }

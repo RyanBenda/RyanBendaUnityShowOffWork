@@ -11,8 +11,7 @@ using UnityEngine.InputSystem;
 
 public class TrapTool : PlaceableTool
 {
-    [HideInInspector]
-    public ToolManager _ToolManager;
+    
 
     [HideInInspector]
     public HandHeldTrap _HandHeldTrap;
@@ -117,7 +116,7 @@ public class TrapTool : PlaceableTool
     public void RemoveTrap()
     {
         _ToolPlaced = false;
-        _ToolManager._CurTrapTool = null;
+        ToolManager.instance._CurTrapTool = null;
         //playerControl._CurrentTool = null;
 
         //_HandHeldTrap._ToolSlot.TweenDown();
@@ -155,7 +154,7 @@ public class TrapTool : PlaceableTool
 
             if (Physics.SphereCast(Camera.main.transform.position - (Camera.main.transform.forward * 2), 2, Camera.main.transform.forward, out hit, 4, _ToolPickupLayerMask))
             {
-                if (hit.transform.root.GetComponent<TrapTool>() != null && playerControl._HoldingTool == false && !_TrapLineRenderer._InUse)
+                if (hit.transform.root.GetComponent<TrapTool>() != null && ToolManager.instance._HoldingTool == false && !_TrapLineRenderer._InUse)
                 {
                     if (_ToolOutlines[0].activeSelf == false)
                     {
@@ -263,15 +262,15 @@ public class TrapTool : PlaceableTool
         }*/
 
         
-        if (playerControl._CurrentTool == this || playerControl._CurrentTool == null)
+        if (ToolManager.instance._CurrentTool == this || ToolManager.instance._CurrentTool == null)
         {
             NewInputUnSetup();
 
-            _ToolManager.UnequipTools();
-            _ToolManager._CurTrapTool = null;
+            ToolManager.instance.UnequipTools();
+            ToolManager.instance._CurTrapTool = null;
 
             //_ToolManager._CurTrapTool = null;
-            playerControl._CurrentTool = null;
+            ToolManager.instance._CurrentTool = null;
 
 
 
@@ -298,7 +297,7 @@ public class TrapTool : PlaceableTool
             //_HandHeldTrap._ToolSlot.TweenDown();
         }
 
-        _ToolManager._CurTrapTool = null;
+        ToolManager.instance._CurTrapTool = null;
         _ToolPlaced = false;
 
         Destroy(this.gameObject);
@@ -387,7 +386,7 @@ public class TrapTool : PlaceableTool
                     }
                 }
 
-                if (playerControl._CurrentTool == this.gameObject.GetComponent<TrapTool>())
+                if (ToolManager.instance._CurrentTool == this.gameObject.GetComponent<TrapTool>())
                 {
                     _CanCatchGhosts = true;
 
@@ -538,7 +537,7 @@ public class TrapTool : PlaceableTool
 
                
 
-                if (playerControl._CurrentTool == this)
+                if (ToolManager.instance._CurrentTool == this)
                     Equip();
 
 
@@ -715,7 +714,7 @@ public class TrapTool : PlaceableTool
             RaycastHit hit;
             if (Physics.SphereCast(Camera.main.transform.position - (Camera.main.transform.forward * 2), 2, Camera.main.transform.forward, out hit, 4, _ToolPickupLayerMask))
             {
-                if (hit.transform.root.GetComponent<TrapTool>() != null && playerControl._HoldingTool == false && !_TrapLineRenderer._InUse)
+                if (hit.transform.root.GetComponent<TrapTool>() != null && ToolManager.instance._HoldingTool == false && !_TrapLineRenderer._InUse)
                 {
                     RetrieveTrap();
                 }
@@ -790,7 +789,7 @@ public class TrapTool : PlaceableTool
 
         if (this != null)
         {
-            if (CanCatch && playerControl._CurrentTool == this.gameObject.GetComponent<TrapTool>())
+            if (CanCatch && ToolManager.instance._CurrentTool == this.gameObject.GetComponent<TrapTool>())
             {
                 if (_CreaturesInRange.Count == 0 && _NoClones)
                     _TrapAnimator.SetBool("Capturing", true);
@@ -821,15 +820,15 @@ public class TrapTool : PlaceableTool
     {
         if (_ToolPlaced && playerControl._PlayerState == PlayerStates.PlayState)
         {
-            if (playerControl._CurrentTool == this.gameObject.GetComponent<TrapTool>() && _CreaturesCaught.Count == 0 && !_TrapLineRenderer._InUse)
+            if (ToolManager.instance._CurrentTool == this.gameObject.GetComponent<TrapTool>() && _CreaturesCaught.Count == 0 && !_TrapLineRenderer._InUse)
             {
                 NewInputUnSetup();
 
-                _ToolManager.UnequipTools();
+                ToolManager.instance.UnequipTools();
 
                 _ToolPlaced = false;
-                _ToolManager._CurTrapTool = null;
-                playerControl._CurrentTool = null;
+                ToolManager.instance._CurTrapTool = null;
+                ToolManager.instance._CurrentTool = null;
 
                 //_HandHeldTrap._ToolSlot.TweenDown();
                 //_HandHeldTrap._ToolSlot.PopArrow();

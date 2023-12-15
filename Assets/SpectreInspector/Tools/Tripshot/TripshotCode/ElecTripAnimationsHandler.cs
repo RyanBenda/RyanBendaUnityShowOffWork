@@ -22,7 +22,7 @@ public class ElecTripAnimationsHandler : MonoBehaviour
                 _HandHeldTripShot.GetComponent<HandHeldTripShot>()._Tripshot.gameObject.SetActive(true);
                 _HandHeldTripShot.GetComponent<HandHeldTripShot>()._Tripshot.Equip();
                 _HandHeldTripShot.GetComponent<HandHeldTripShot>()._Tripshot._HandHeldTripShot = _HandHeldTripShot.GetComponent<HandHeldTripShot>();
-                _HandHeldTripShot.GetComponent<HandHeldTripShot>().playerControl._HoldingTool = false;
+                ToolManager.instance._HoldingTool = false;
             }
 
             _HandHeldTripShot.SetActive(false);
@@ -55,7 +55,7 @@ public class ElecTripAnimationsHandler : MonoBehaviour
     public void UnequipTool()
     {
         _HandHeldTripShot.GetComponent<HandHeldTripShot>()._ToolAnimator.SetBool("Unequiping", false);
-        _HandHeldTripShot.GetComponent<HandHeldTripShot>().playerControl._CurrentTool = null;
+        ToolManager.instance._CurrentTool = null;
 
         //_HandHeldTripShot.GetComponent<HandHeldTripShot>()._ToolSlot.TweenDown();
 

@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class TrackerTool : HandheldTool
+public class CameraTool : HandheldTool
 {
-    public static TrackerTool CameraInstance;
+    public static CameraTool CameraInstance;
 
     public List<CreatureBrain> _Creatures;
     //public CompendiumButtonComponent[] _CompendiumButtons;
@@ -144,14 +144,14 @@ public class TrackerTool : HandheldTool
         //playerInput = FindObjectOfType<PlayerInput>();
 
         bool _delayToolSwap = false;
-        if (playerControl._CurrentTool != null && playerControl._CurrentTool != this)
+        if (ToolManager.instance._CurrentTool != null && ToolManager.instance._CurrentTool != this)
         {
-            playerControl._CurrentTool._SwappingTool = this;
+            ToolManager.instance._CurrentTool._SwappingTool = this;
 
-            if (playerControl._CurrentTool.gameObject.GetComponent<HandHeldTrap>() || playerControl._CurrentTool.gameObject.GetComponent<GoggleTool>())
+            if (ToolManager.instance._CurrentTool.GetComponent<HandHeldTrap>() || ToolManager.instance._CurrentTool.GetComponent<GoggleTool>())
                 _delayToolSwap = true;
 
-            playerControl._CurrentTool.Unequip();
+            ToolManager.instance._CurrentTool.Unequip();
 
             if (_delayToolSwap)
             {
@@ -162,8 +162,8 @@ public class TrackerTool : HandheldTool
 
         if (!_PreventSwap)
         {
-            playerControl._CurrentTool = this;
-            playerControl._HoldingTool = true;
+            ToolManager.instance._CurrentTool = this;
+            ToolManager.instance._HoldingTool = true;
             _ToolSelected = true;
 
             base.Equip();
@@ -622,13 +622,13 @@ public class TrackerTool : HandheldTool
 
     public override void Equip()
     {
-        Tool currentTool = playerControl._CurrentTool;
+        Tool currentTool = ToolManager.instance._CurrentTool;
 
         if (currentTool == null) // NEED TO CHANGE TO HANDLE MULTIPLE TOOLS
         {
 
         }
-        else if (currentTool.GetComponent<TrackerTool>() == null)
+        else if (currentTool.GetComponent<CameraTool>() == null)
         {
 
         }
@@ -689,10 +689,10 @@ public class TrackerTool : HandheldTool
 
         _GogglesOn = false;
 
-        if (playerControl._CurrentTool)
-            playerControl._CurrentTool._ToolSelected = false;
-        playerControl._CurrentTool = null;
-        playerControl._HoldingTool = false;
+        if (ToolManager.instance._CurrentTool)
+            ToolManager.instance._CurrentTool._ToolSelected = false;
+        ToolManager.instance._CurrentTool = null;
+        ToolManager.instance._HoldingTool = false;
         if (_Cam)
             _Cam.fieldOfView = _fov;
 

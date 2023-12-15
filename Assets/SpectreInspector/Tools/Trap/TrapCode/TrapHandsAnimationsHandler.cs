@@ -31,7 +31,7 @@ public class TrapHandsAnimationsHandler : MonoBehaviour
     public void UnequipTool()
     {
         _HandHeldTrap.GetComponent<HandHeldTrap>()._ToolAnimator.SetBool("Unequiping", false);
-        transform.root.GetComponent<PhysicsPlayerController>()._CurrentTool = null;
+        ToolManager.instance._CurrentTool = null;
 
         //_HandHeldTrap.GetComponent<HandHeldTrap>()._ToolSlot.TweenDown();
 

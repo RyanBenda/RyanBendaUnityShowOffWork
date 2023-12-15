@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraArmsAnimationHandler : MonoBehaviour
 {
-    public TrackerTool _Camera;
+    public CameraTool _Camera;
     public GameObject _CameraModel;
     public GameObject _HandsModel;
 

@@ -14,7 +14,7 @@ public class Tool : MonoBehaviour
     [HideInInspector]
     public GameObject _ToolUI;
     public GameObject _ToolUIPrefab;
-    //MainCanvasComponent _MainCanvas;
+    MainCanvasComponent _MainCanvas;
 
     [HideInInspector]
     public Tool _SwappingTool;
@@ -29,36 +29,25 @@ public class Tool : MonoBehaviour
     }
     public virtual void Equip() 
     {
-        // "BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD" - Ryan (The Author of Line Below)
-        //WeaponWheel weaponWheel = Camera.main.GetComponent<CameraLook>().playerInp
-
-        //_MainCanvas = Camera.main.transform.parent.GetComponent<WeaponWheel>()._WeaponWheelOBJ.transform.GetComponentInParent<MainCanvasComponent>().gameObject;
-        /*CameraReferenceScript cam = Camera.main.GetComponent<CameraReferenceScript>();
-
-        _MainCanvas = cam._MainCanvas;
+        _MainCanvas = ToolManager.instance._MainCanvas;
 
         _ToolUI = Instantiate(_ToolUIPrefab, _MainCanvas._ToolUILocations.transform);   
-
-        if (cam._WeaponWheel._WeaponWheelOBJ.activeSelf == true)
-            cam._WeaponWheel.OpenCloseWeaponWheel();*/
     }
     public virtual void Switch() 
-    { 
-        //Camera.main.GetComponent<CameraLook>().playerControl._CurrentTool.Unequip();
+    {
+        ToolManager.instance._CurrentTool.Unequip();
 
         Equip();
     }
     public virtual void DetermineToolSwap() 
     {
 
-        /*if (Camera.main.GetComponent<CameraLook>().playerControl._CurrentTool == null)
+        if (ToolManager.instance._CurrentTool == null)
             Equip();
-        else if (Camera.main.GetComponent<CameraLook>().playerControl._CurrentTool.name == this.gameObject.name)
+        else if (ToolManager.instance._CurrentTool.name != this.gameObject.name)
         {
-
+            Switch();
         }
-        else
-            Switch();*/
     }
 
     public virtual void playEquipSound()

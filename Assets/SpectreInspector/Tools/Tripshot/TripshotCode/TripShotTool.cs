@@ -10,8 +10,7 @@ using UnityEngine;
 // Pretty Good with Handling Roofs (Plunger can sometimes clip through objects given raycast is much smaller than plunger)
 public class TripShotTool : PlaceableTool
 {
-    [HideInInspector]
-    public ToolManager _ToolManager;
+    
 
 
 
@@ -157,11 +156,11 @@ public class TripShotTool : PlaceableTool
 
     public override void ReturnTool()
     {
-        _ToolManager.UnequipTools();
+        ToolManager.instance.UnequipTools();
 
         _ToolPlaced = false;
-        _ToolManager._CurTripShot = null;
-        Camera.main.transform.parent.GetComponent<PhysicsPlayerController>()._CurrentTool = null;
+        ToolManager.instance._CurTripShot = null;
+        ToolManager.instance._CurrentTool = null;
 
         //_HandHeldTripShot._ToolSlot.TweenDown();
         //_HandHeldTripShot._ToolSlot.PopArrow();
@@ -183,7 +182,7 @@ public class TripShotTool : PlaceableTool
 
                 TripShotTool tripShotTool;
 
-                if (hit.transform.TryGetComponent<TripShotTool>(out tripShotTool) == true && _PlayerControl._HoldingTool == false)
+                if (hit.transform.TryGetComponent<TripShotTool>(out tripShotTool) == true && ToolManager.instance._HoldingTool == false)
                 {
                     if (_ToolOutlines[0].activeSelf == false)
                     {
@@ -202,11 +201,11 @@ public class TripShotTool : PlaceableTool
                             Destroy(_Plunger);
                         }
 
-                        _ToolManager.UnequipTools();
+                        ToolManager.instance.UnequipTools();
 
                         _ToolPlaced = false;
-                        _ToolManager._CurTripShot = null;
-                        Camera.main.transform.parent.GetComponent<PhysicsPlayerController>()._CurrentTool = null;
+                        ToolManager.instance._CurTripShot = null;
+                        ToolManager.instance._CurrentTool = null;
                         
                         if (_HandHeldTripShot.gameObject.activeSelf == true)
                         {
@@ -264,7 +263,7 @@ public class TripShotTool : PlaceableTool
                 _PlungerFinalPosSphere.transform.localPosition = Vector3.zero;
             }*/
 
-            if (Camera.main.transform.parent.GetComponent<PhysicsPlayerController>()._CurrentTool == this.gameObject.GetComponent<TripShotTool>())
+            if (ToolManager.instance._CurrentTool == this.gameObject.GetComponent<TripShotTool>())
             {
                 AimTripShot();
                 Vector3 newDirection = Vector3.RotateTowards(_Barrel.forward, _DirOfAim, _RadiansSpeed, _DeltaSpeed);
@@ -286,7 +285,7 @@ public class TripShotTool : PlaceableTool
 
             PickUpTool();
 
-            if (Camera.main.transform.parent.GetComponent<PhysicsPlayerController>()._CurrentTool == this.gameObject.GetComponent<TripShotTool>())
+            if (ToolManager.instance._CurrentTool == this.gameObject.GetComponent<TripShotTool>())
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.R))
                     ReturnTool();

@@ -103,14 +103,14 @@ public class GoggleTool : HandheldTool
         
 
         bool _delayToolSwap = false;
-        if (playerControl._CurrentTool != null && playerControl._CurrentTool != this)
+        if (ToolManager.instance._CurrentTool != null && ToolManager.instance._CurrentTool != this)
         {
-            playerControl._CurrentTool._SwappingTool = this;
+            ToolManager.instance._CurrentTool._SwappingTool = this;
 
-            if (playerControl._CurrentTool.gameObject.GetComponent<HandHeldTrap>() || playerControl._CurrentTool.gameObject.GetComponent<TrackerTool>())
+            if (ToolManager.instance._CurrentTool.GetComponent<HandHeldTrap>() || ToolManager.instance._CurrentTool.GetComponent<CameraTool>())
                 _delayToolSwap = true;
 
-            playerControl._CurrentTool.Unequip();
+            ToolManager.instance._CurrentTool.Unequip();
 
             if (_delayToolSwap)
             {
@@ -124,8 +124,8 @@ public class GoggleTool : HandheldTool
             //_ToolSlot.TweenUp();
             //_ToolSlot.MoveArrow(2);
 
-            if (playerControl._CurrentTool != null && playerControl._CurrentTool != this)
-                playerControl._CurrentTool.Unequip();
+            if (ToolManager.instance._CurrentTool != null && ToolManager.instance._CurrentTool != this)
+                ToolManager.instance._CurrentTool.Unequip();
 
             if (_PlayerInput == null)
             {
@@ -134,8 +134,8 @@ public class GoggleTool : HandheldTool
 
             NewInputSetup();
 
-            playerControl._CurrentTool = this;
-            playerControl._HoldingTool = true;
+            ToolManager.instance._CurrentTool = this;
+            ToolManager.instance._HoldingTool = true;
             _ToolSelected = true;
 
             base.Equip();
@@ -325,8 +325,8 @@ public class GoggleTool : HandheldTool
         base.Unequip();
         _GoggleScan.SetActive(false);
 
-        playerControl._CurrentTool = null;
-        playerControl._HoldingTool = false;
+        ToolManager.instance._CurrentTool = null;
+        ToolManager.instance._HoldingTool = false;
 
 
 
