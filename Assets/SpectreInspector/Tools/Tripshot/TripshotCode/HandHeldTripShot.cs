@@ -38,9 +38,6 @@ public class HandHeldTripShot : PlaceableTool
             _PlayerInput = _PlayerControl._PlayerInput;
         }
 
-        NewInputSetup();
-
-
         if (ToolManager.instance._CurrentTool == null || ToolManager.instance._CurrentTool.GetComponent<TripShotTool>() == null)
         {
 
@@ -70,15 +67,11 @@ public class HandHeldTripShot : PlaceableTool
 
                 if (ToolManager.instance._CurTripShot == null)
                 {
+                    NewInputSetup();
 
-
-                    //Debug.Log("Awoken");
                     ToolManager.instance._CurrentTool = this;
                     ToolManager.instance._HoldingTool = true;
                     _ToolSelected = true;
-
-                    //this.transform.localEulerAngles = new Vector3(this.transform.localEulerAngles.x + _HandHeldRot.x, this.transform.localEulerAngles.y + _HandHeldRot.y, this.transform.localEulerAngles.z + _HandHeldRot.z);
-                    //this.transform.localPosition = new Vector3(this.transform.localPosition.x + _HandHeldDistFromCam.x, this.transform.localPosition.y + _HandHeldDistFromCam.y, this.transform.localPosition.z + _HandHeldDistFromCam.z);
 
                     base.Equip();
 
@@ -96,7 +89,6 @@ public class HandHeldTripShot : PlaceableTool
                 {
                     Tool curTool = ToolManager.instance._CurTripShot;
                     curTool._ToolSelected = true;
-                    //curTool.GetComponent<TripShotTool>()._TripShotTool = playerControl._ToolManager._CurTripShot.gameObject;
                     ToolManager.instance._CurrentTool = curTool;
                     ToolManager.instance._CurrentTool.Equip();
 
@@ -118,35 +110,6 @@ public class HandHeldTripShot : PlaceableTool
     {
         OnEnable();
     }
-
-    /*public override void Equip()
-    {
-        PlayerControl playerControl = Camera.main.transform.parent.GetComponent<PlayerControl>();
-
-        if (playerControl._ToolManager._CurTripShot == null)
-        {
-            base.Equip();
-
-            Tool currentTool = playerControl._CurrentTool;
-
-            if (currentTool == null) // NEED TO CHANGE TO HANDLE MULTIPLE TOOLS
-            {
-                InstantiateTripShot(currentTool);
-            }
-            else if (currentTool.GetComponent<TripShotTool>() == null && currentTool.GetComponent<HandHeldTripShot>() == null)
-            {
-                InstantiateTripShot(currentTool);
-            }
-        }
-        else
-        {
-            Tool curTool = playerControl._ToolManager._CurTripShot;
-            curTool._ToolSelected = true;
-            curTool.GetComponent<TripShotTool>()._TripShotTool = playerControl._ToolManager._CurTripShot.gameObject;
-            playerControl._CurrentTool = curTool;
-        }
-
-    }*/
 
     public override void Unequip()
     {
@@ -171,22 +134,6 @@ public class HandHeldTripShot : PlaceableTool
         _ToolAnimator.SetBool("Unequiping", true);
     }
 
-    
-
-    /*void InstantiateTripShot(Tool curTool)
-    {
-        _HandHeldTripShot = Instantiate(_TripShotHandHeldPrefab, Camera.main.transform);
-        _HandHeldTripShot.transform.localEulerAngles = new Vector3(_HandHeldTripShot.transform.localEulerAngles.x + _HandHeldRot.x, _HandHeldTripShot.transform.localEulerAngles.y + _HandHeldRot.y, _HandHeldTripShot.transform.localEulerAngles.z + _HandHeldRot.z);
-        _HandHeldTripShot.transform.localPosition = new Vector3(_HandHeldTripShot.transform.localPosition.x + _HandHeldDistFromCam.x, _HandHeldTripShot.transform.localPosition.y + _HandHeldDistFromCam.y, _HandHeldTripShot.transform.localPosition.z + _HandHeldDistFromCam.z);
-
-        // Will Break if main camera is not a direct child of the player
-
-        curTool = _HandHeldTripShot.GetComponent<HandHeldTripShot>();
-        curTool._ToolSelected = true;
-        curTool.GetComponent<HandHeldTripShot>()._HandHeldTripShot = _HandHeldTripShot;
-        Camera.main.transform.parent.GetComponent<PlayerControl>()._CurrentTool = curTool;
-    }*/
-
     public override void PlaceTool()
     {
         if (!_ToolPlaced && _ToolGhost != null && _PlayerControl._PlayerState == PlayerStates.PlayState)
@@ -202,27 +149,12 @@ public class HandHeldTripShot : PlaceableTool
             TripShotScript._FinalPos = _ToolGhost.transform.position;
             TripShotScript._FinalNorm = _Normal;
             TripShotScript._PlayerControl = _PlayerControl;
-
-
+            TripShotScript._PlayerInput = _PlayerInput;
 
             TripShotScript._FinalFor = _PlayerControl.transform.forward;
-                //Camera.main.transform.root.forward;
             tripShotTool.transform.forward = _PlayerControl.transform.forward;
-            //Camera.main.transform.root.forward;
 
-            //tripShotTool.GetComponent<TripShotTool>().BeginLerp();
-
-            /*tripShotTool.transform.position = _ToolGhost.transform.position;
-            tripShotTool.transform.rotation = _ToolGhost.transform.rotation;
-            tripShotTool.transform.GetChild(0).rotation = _ToolGhost.transform.GetChild(0).rotation;*/
-
-
-            //tripShotTool.GetComponent<TripShotTool>()._ToolPlaced = true;
             TripShotScript._ToolGhostExists = false;
-            //tripShotTool.GetComponent<TripShotTool>()._TripShotTool = tripShotTool;
-            //TripShotScript._ToolManager = playerControl._ToolManager;
-
-
 
             ToolManager.instance._CurTripShot = TripShotScript;
 
@@ -235,16 +167,12 @@ public class HandHeldTripShot : PlaceableTool
 
             base.Unequip();
 
-            //tripShotTool.GetComponent<TripShotTool>().Equip();
             TripShotScript._HandHeldTripShot = this;
             ToolManager.instance._HoldingTool = false;
 
-            //this.gameObject.SetActive(false);
             _ToolSelected = false;
 
             _ToolAnimator.SetBool("Placing", true);
-
-
         }
     }
 
@@ -262,13 +190,6 @@ public class HandHeldTripShot : PlaceableTool
                     _ToolGhost.transform.position = new Vector3 (hit.point.x, hit.point.y + _IncreasePlaceHeight, hit.point.z);
                     _ToolGhost.transform.rotation = Quaternion.LookRotation(hit.normal);
                     _Normal = hit.normal;
-                    //_ToolGhost.transform.GetChild(0).transform.forward = -Camera.main.transform.right;
-
-
-                    /*float xVal = _ToolGhost.transform.rotation.x;
-                    
-                    _ToolGhost.transform.rotation = new Quaternion(xVal, _ToolGhost.transform.rotation.y, _ToolGhost.transform.rotation.z, _ToolGhost.transform.rotation.w);
-                    //_ToolGhost.transform.eulerAngles = Vector3.zero;*/
                 }
                 else if (_ToolGhost && Vector3.Distance(this.transform.position, hit.point) > 1.2f)
                 {
@@ -276,21 +197,8 @@ public class HandHeldTripShot : PlaceableTool
 
                     _ToolGhost.transform.rotation = Quaternion.LookRotation(hit.normal);
                     _Normal = hit.normal;
-
-                    //_ToolGhost.transform.GetChild(0).transform.forward = -Camera.main.transform.right;
-
-
-
-                    /*float xVal = _ToolGhost.transform.rotation.x;
-                    
-                    _ToolGhost.transform.rotation = new Quaternion(xVal, _ToolGhost.transform.rotation.y, _ToolGhost.transform.rotation.z, _ToolGhost.transform.rotation.w);*/
                 }
                 _CanPlace = true;
-                //if (Input.GetMouseButtonDown(0))
-                //{
-                //    PlaceTool();
-                //}
-
             }
             else if (_ToolGhost != null && _ToolGhostExists)
             {
@@ -308,20 +216,11 @@ public class HandHeldTripShot : PlaceableTool
             _ToolGhostExists = false;
         }
 
-
-        //if (Input.GetMouseButtonDown(1) && _ToolSelected)
-        //{
-        //    Unequip();
-        //}
-
         if (_ToolGhost == null)
         {
             _ToolGhostExists = false;
         }
- 
-
     }
-
 
     private void DoPrimaryAction(InputAction.CallbackContext obj)
     {
@@ -343,14 +242,12 @@ public class HandHeldTripShot : PlaceableTool
 
         _PlayerInput.actions["Unequip"].performed += DoUnequipAction;
         _PlayerInput.actions["Unequip"].Enable();
-
     }
 
     void NewInputUnSetup()
     {
         _PlayerInput.actions["PrimaryAction"].performed -= DoPrimaryAction;
         _PlayerInput.actions["PrimaryAction"].Disable();
-
 
         _PlayerInput.actions["Unequip"].performed -= DoUnequipAction;
         _PlayerInput.actions["Unequip"].Disable();

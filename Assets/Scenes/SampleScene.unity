@@ -1477,6 +1477,7 @@ MonoBehaviour:
   _HandToolsList: []
   _HoldingTool: 0
   _CurrentTool: {fileID: 0}
+  _MainCanvas: {fileID: 0}
 --- !u!20 &2603548509687062234
 Camera:
   m_ObjectHideFlags: 0

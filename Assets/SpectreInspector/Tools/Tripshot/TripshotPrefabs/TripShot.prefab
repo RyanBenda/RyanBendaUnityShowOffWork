@@ -721,8 +721,6 @@ MonoBehaviour:
   - {fileID: 8781715301151504724}
   - {fileID: 2126400748287237038}
   _IncreasePlaceHeight: 0.025
-  _TripShotHandHeldPrefab: {fileID: 4664047951969989164, guid: 1c450c8ec31e1254e9f9f4a823a929b9,
-    type: 3}
   _PlungerFinalNormal: {x: 0, y: 0, z: 0}
   _PlungerFinalNormalBool: 0
   _TripShotReach: 50
@@ -772,6 +770,7 @@ MonoBehaviour:
   _FinalNorm: {x: 0, y: 0, z: 0}
   _FinalFor: {x: 0, y: 0, z: 0}
   _PlayerControl: {fileID: 0}
+  _PlayerInput: {fileID: 0}
   _PlacingInterpolationSpeed: 1
   _TripshotMaxDist: 10
 --- !u!120 &7963802785557517325
@@ -1087,7 +1086,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a060585269d41e94faed2f98c2e15d07, type: 2}
+      objectReference: {fileID: 2100000, guid: 0aaa2003baf784243bd8eed6cc41aa12, type: 2}
     - target: {fileID: -4520214202338720681, guid: a951edda5e9a54647827955b0ed372d5,
         type: 3}
       propertyPath: m_Layer
@@ -1662,7 +1661,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a060585269d41e94faed2f98c2e15d07, type: 2}
+      objectReference: {fileID: 2100000, guid: 0aaa2003baf784243bd8eed6cc41aa12, type: 2}
     - target: {fileID: -6818200791341559929, guid: 2ff6d90167951d143bdb888e8155360b,
         type: 3}
       propertyPath: m_Layer

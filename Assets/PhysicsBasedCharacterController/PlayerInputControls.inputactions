@@ -1,5 +1,5 @@
 {
-    "name": "PlayerControlsNStuff",
+    "name": "PlayerInputControls",
     "maps": [
         {
             "name": "Player",
@@ -93,6 +93,15 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HoldingSecondaryAction",
+                    "type": "Button",
+                    "id": "6143c9e7-c287-4168-9115-7ce658f7603a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=0.01,pressPoint=0.5)",
                     "initialStateCheck": false
                 },
                 {
@@ -681,6 +690,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Compendium_RB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d056e0b8-1799-4cd0-ae72-283f6e0391e0",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HoldingSecondaryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d9d743c9-95ba-4b8c-98ab-17a930059ba0",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HoldingSecondaryAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
