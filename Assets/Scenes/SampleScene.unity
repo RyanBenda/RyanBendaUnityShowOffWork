@@ -1967,6 +1967,7 @@ GameObject:
   - component: {fileID: 2603548508826401916}
   - component: {fileID: 2603548508826401919}
   - component: {fileID: 2603548508826401918}
+  - component: {fileID: 2603548508826401920}
   m_Layer: 7
   m_Name: Player2
   m_TagString: Player
@@ -2093,6 +2094,20 @@ MonoBehaviour:
   _HoldingTool: 0
   _CurrentTool: {fileID: 0}
   _MainCanvas: {fileID: 0}
+--- !u!114 &2603548508826401920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2603548508826401914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37816cfee3ba01c4b9e7f95aed540a69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackers:
+  - {fileID: 11400000, guid: 7c7754ddab8986d4aa5dfaad129a135f, type: 2}
 --- !u!20 &2603548509687062234
 Camera:
   m_ObjectHideFlags: 0

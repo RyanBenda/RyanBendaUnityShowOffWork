@@ -57,7 +57,7 @@ public class CreatureBrain : MonoBehaviour
 
     private void OnDestroy()
     {
-        CameraTool.CameraInstance._Creatures.Remove(this);
+        //CameraTool.CameraInstance._Creatures.Remove(this);
     }
 
     public bool IsInFrustumPlanes()
@@ -79,7 +79,7 @@ public class CreatureBrain : MonoBehaviour
             _Player = GameObject.FindGameObjectWithTag("Player");
 
         }
-        CameraTool.CameraInstance._Creatures.Add(this);
+        //CameraTool.CameraInstance._Creatures.Add(this);
     }
 
 
