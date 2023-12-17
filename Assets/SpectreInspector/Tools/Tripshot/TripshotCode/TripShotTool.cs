@@ -92,6 +92,8 @@ public class TripShotTool : PlaceableTool
 
     [SerializeField] private float _TripshotMaxDist = 50;
 
+    [SerializeField] private Canvas _LogoCanvas;
+
     private void OnEnable()
     {
         NewInputSetup();
@@ -435,8 +437,8 @@ public class TripShotTool : PlaceableTool
         _PlayerInput.actions["PrimaryAction"].performed -= DoFireAction;
         _PlayerInput.actions["PrimaryAction"].Disable();
 
-        _PlayerInput.actions["Interact"].performed -= DoPickUpAction;
-        _PlayerInput.actions["Interact"].Disable();
+        //_PlayerInput.actions["Interact"].performed -= DoPickUpAction;
+        //_PlayerInput.actions["Interact"].Disable();
 
         _PlayerInput.actions["Unequip"].performed -= DoUnequipAction;
         _PlayerInput.actions["Unequip"].Disable();
@@ -481,7 +483,7 @@ public class TripShotTool : PlaceableTool
         {
             RaycastHit hit;
 
-            if (Physics.SphereCast(Camera.main.transform.position - (Camera.main.transform.forward * 2), 2, Camera.main.transform.forward, out hit, 4, _ToolPickupLayerMask))
+            if (Physics.SphereCast(Camera.main.transform.position - (Camera.main.transform.forward * 2), 2, Camera.main.transform.forward, out hit, 4, _ToolPickupLayerMask, QueryTriggerInteraction.Ignore))
             {
                 TripShotTool tripShotTool;
 
@@ -525,5 +527,22 @@ public class TripShotTool : PlaceableTool
     {
         if (ToolManager.instance._CurrentTool == this)
             ReturnTool();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<PhysicsPlayerController>())
+        {
+            _LogoCanvas.gameObject.SetActive(false);
+        }
+    }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<PhysicsPlayerController>())
+        {
+            _LogoCanvas.gameObject.SetActive(true);
+        }
     }
 }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5421d92f032a0ed42ba5c024e6c4aeb8, type: 3}
+  m_Name: Rags
+  m_EditorClassIdentifier: 
+  _Name: Rags
+  _Description: 
+  _Sprite: {fileID: 21300000, guid: 1d59b0df58a13cc49965b3cbe53334b5, type: 3}
+  _Image: {fileID: 0}
+  _CreaturePrefab: {fileID: 0}
+  _NamePlate: {fileID: 21300000, guid: e5c9bf0e87cbe664bb57257e6bdcdbe2, type: 3}
+  _CompendiumPlate: {fileID: 21300000, guid: de69e51a394352c4f91c1757dc80b9af, type: 3}

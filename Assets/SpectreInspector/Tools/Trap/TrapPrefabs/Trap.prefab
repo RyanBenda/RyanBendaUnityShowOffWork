@@ -6851,7 +6851,7 @@ GameObject:
   - component: {fileID: 8449493820556327463}
   - component: {fileID: 2335207405355015401}
   - component: {fileID: 8972160049282741268}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Trap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

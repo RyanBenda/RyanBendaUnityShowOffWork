@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af267d5e2bc68b4c835976879322619, type: 3}
+  m_Name: Bear_CreatureOBJ
+  m_EditorClassIdentifier: 
+  _Name: Rags
+  _Description: "Arlo Log 14: I had one of these as a kid! I think they\u2019re called
+    Rags. I never had the whole set\u2026 they got recalled for safety reasons. Something
+    about throwing stuff at children\u2026 I hope there's no bricks or hot honey
+    buns in the house. :("
+  _Sprite: {fileID: 21300000, guid: c3aacce58af1e724e9fb91817e3efae8, type: 3}
+  _Image: {fileID: 8400000, guid: 67833129cdbf1b941967e444329f5b9c, type: 2}
+  _CreaturePrefab: {fileID: 0}
+  _NamePlate: {fileID: 21300000, guid: a29f9308f3ef9d64198c087b54cef536, type: 3}
+  _CompendiumPlate: {fileID: 21300000, guid: de69e51a394352c4f91c1757dc80b9af, type: 3}

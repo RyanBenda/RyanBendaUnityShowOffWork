@@ -152,7 +152,7 @@ public class TrapTool : PlaceableTool
         {
             RaycastHit hit;
 
-            if (Physics.SphereCast(Camera.main.transform.position - (Camera.main.transform.forward * 2), 2, Camera.main.transform.forward, out hit, 4, _ToolPickupLayerMask))
+            if (Physics.SphereCast(Camera.main.transform.position - (Camera.main.transform.forward * 2), 2, Camera.main.transform.forward, out hit, 4, _ToolPickupLayerMask, QueryTriggerInteraction.Ignore))
             {
                 if (hit.transform.root.GetComponent<TrapTool>() != null && ToolManager.instance._HoldingTool == false && !_TrapLineRenderer._InUse)
                 {
@@ -712,7 +712,7 @@ public class TrapTool : PlaceableTool
         if (_ToolPlaced)
         {
             RaycastHit hit;
-            if (Physics.SphereCast(Camera.main.transform.position - (Camera.main.transform.forward * 2), 2, Camera.main.transform.forward, out hit, 4, _ToolPickupLayerMask))
+            if (Physics.SphereCast(Camera.main.transform.position - (Camera.main.transform.forward * 2), 2, Camera.main.transform.forward, out hit, 4, _ToolPickupLayerMask, QueryTriggerInteraction.Ignore))
             {
                 if (hit.transform.root.GetComponent<TrapTool>() != null && ToolManager.instance._HoldingTool == false && !_TrapLineRenderer._InUse)
                 {
