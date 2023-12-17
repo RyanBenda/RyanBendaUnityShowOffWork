@@ -17,8 +17,7 @@ public class HandHeldTrap : PlaceableTool
     bool _PreventSwap;
     Vector3 _Normal;
 
-    public List<GameObject> _OtherTools = new List<GameObject>();
-    //public HotBarPos _ToolSlot;
+    public HotBarPos _ToolSlot;
 
 
     public PhysicsPlayerController playerControl;
@@ -36,14 +35,14 @@ public class HandHeldTrap : PlaceableTool
 
     private void OnEnable()
     {
-        
+
 
         if (_PlayerInput == null)
         {
-            //_PlayerInput = playerControl.playerInput;
+            _PlayerInput = playerControl._PlayerInput;
         }
 
-        
+
 
 
 
@@ -52,7 +51,7 @@ public class HandHeldTrap : PlaceableTool
         {
             ToolManager.instance._CurrentTool._SwappingTool = this;
 
-            if (ToolManager.instance._CurrentTool.GetComponent<GoggleTool>() || ToolManager.instance._CurrentTool.GetComponent<CameraTool>())
+            if (ToolManager.instance._CurrentTool.GetComponent<HandHeldTripShot>() || ToolManager.instance._CurrentTool.GetComponent<GoggleTool>() || ToolManager.instance._CurrentTool.GetComponent<CameraTool>())
                 _delayToolSwap = true;
 
             ToolManager.instance._CurrentTool.Unequip();
@@ -66,14 +65,14 @@ public class HandHeldTrap : PlaceableTool
 
         if (!_PreventSwap)
         {
-            
 
-            //_ToolSlot.TweenUp();
-            //_ToolSlot.MoveArrow(1);
+            _ToolSlot.MoveArrow(1);
+
 
             if (ToolManager.instance._CurTrapTool == null)
             {
-
+                _ToolSlot.TweenUp();
+                
 
                 ToolManager.instance._CurrentTool = this;
                 ToolManager.instance._HoldingTool = true;
@@ -81,13 +80,15 @@ public class HandHeldTrap : PlaceableTool
 
                 base.Equip();
 
-                for (int i = 0; i < _OtherTools.Count; i++)
+                foreach (Tool tool in ToolManager.instance._HandToolsList)
                 {
-                    _OtherTools[i].gameObject.SetActive(false);
+                    if (tool != null & tool != this)
+                        tool.gameObject.SetActive(false);
                 }
 
                 NewInputSetup();
                 _ToolAnimator.SetBool("PickingUp", true);
+                _ToolAnimator.SetBool("Placing", false);
             }
             else
             {
@@ -118,12 +119,12 @@ public class HandHeldTrap : PlaceableTool
 
         base.Unequip();
 
-        //_ToolSlot.TweenDown();
+        _ToolSlot.TweenDown();
 
 
         if (_SwappingTool == null)
         {
-            //_ToolSlot.PopArrow();
+            _ToolSlot.PopArrow();
         }
 
 
@@ -133,12 +134,8 @@ public class HandHeldTrap : PlaceableTool
         if (ToolManager.instance._CurrentTool != null)
         {
             ToolManager.instance._CurrentTool._ToolSelected = false;
-            //transform.root.GetComponent<PlayerControl>()._CurrentTool = null;
         }
         ToolManager.instance._HoldingTool = false;
-
-        //this.gameObject.SetActive(false);
-
         _ToolAnimator.SetBool("Unequiping", true);
     }
 
@@ -146,7 +143,7 @@ public class HandHeldTrap : PlaceableTool
     {
         if (!_ToolPlaced && _ToolGhost != null && playerControl._PlayerState == PlayerStates.PlayState)
         {
-
+            NewInputUnSetup();
             //RumbleManager.instance.RumblePulse(1, 1, 0.25f);
 
             GameObject trapTool = Instantiate(_ToolPrefab);
@@ -164,6 +161,7 @@ public class HandHeldTrap : PlaceableTool
             trapToolScript._ToolGhostExists = false;
             //trapToolScript._ToolManager = playerControl._ToolManager;
             trapToolScript.playerControl = playerControl;
+            trapToolScript._PlayerInput = _PlayerInput;
             //trapToolScript._GPG = GravPolt_Gun;
             ToolManager.instance._CurTrapTool = trapToolScript;
 
@@ -180,6 +178,7 @@ public class HandHeldTrap : PlaceableTool
 
             //this.gameObject.SetActive(false);
             _ToolSelected = false;
+            _ToolAnimator.SetBool("PickingUp", false);
             _ToolAnimator.SetBool("Placing", true);
         }
     }

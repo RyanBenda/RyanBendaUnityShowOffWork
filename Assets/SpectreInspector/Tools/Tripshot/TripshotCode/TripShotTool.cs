@@ -45,7 +45,7 @@ public class TripShotTool : PlaceableTool
 
     public bool _PlungerShot;
     public GameObject _Plunger;
-    public LookAtVelocity _PlungerScript;
+    public PlungerComponent _PlungerScript;
     [SerializeField] private GameObject _PlungerPrefab;
     public Vector3 _PlungerFinalPos;
 
@@ -412,8 +412,10 @@ public class TripShotTool : PlaceableTool
 
         _PlungerScript = null;
 
-        _LauncherAnimator.SetBool("FirePlunger", false);
-        _OutlineLauncherAnimator.SetBool("FirePlunger", false);
+        if (_LauncherAnimator)
+            _LauncherAnimator.SetBool("FirePlunger", false);
+        if (_OutlineLauncherAnimator)
+            _OutlineLauncherAnimator.SetBool("FirePlunger", false);
     }
 
     void NewInputSetup()
@@ -452,7 +454,7 @@ public class TripShotTool : PlaceableTool
                 _Plunger = Instantiate(_PlungerPrefab, _BarrelLaunchPoint);
                 _Plunger.transform.parent = null;
 
-                _PlungerScript = _Plunger.GetComponent<LookAtVelocity>();
+                _PlungerScript = _Plunger.GetComponent<PlungerComponent>();
 
                 _PlungerShot = true;
                 Physics.IgnoreCollision(_Plunger.GetComponentInChildren<BoxCollider>(), GetComponent<CapsuleCollider>());
@@ -485,9 +487,11 @@ public class TripShotTool : PlaceableTool
 
                 if (hit.transform.TryGetComponent<TripShotTool>(out tripShotTool) == true && ToolManager.instance._HoldingTool == false)
                 {
+                    NewInputUnSetup();
+
                     if (_PlungerShot)
                     {
-                        Destroy(_Plunger.GetComponent<LookAtVelocity>().TripShotRope);
+                        Destroy(_Plunger.GetComponent<PlungerComponent>().TripShotRope);
                         _PlungerShot = false;
                         Destroy(_Plunger);
                     }
@@ -519,6 +523,7 @@ public class TripShotTool : PlaceableTool
 
     private void DoUnequipAction(InputAction.CallbackContext obj)
     {
-        ReturnTool();
+        if (ToolManager.instance._CurrentTool == this)
+            ReturnTool();
     }
 }

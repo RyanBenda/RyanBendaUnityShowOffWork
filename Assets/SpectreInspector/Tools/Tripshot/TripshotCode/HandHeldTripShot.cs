@@ -46,7 +46,7 @@ public class HandHeldTripShot : PlaceableTool
             {
                 ToolManager.instance._CurrentTool._SwappingTool = this;
 
-                if (ToolManager.instance._CurrentTool.GetComponent<GoggleTool>() || ToolManager.instance._CurrentTool.GetComponent<CameraTool>())
+                if (ToolManager.instance._CurrentTool.GetComponent<HandHeldTrap>() || ToolManager.instance._CurrentTool.GetComponent<GoggleTool>() || ToolManager.instance._CurrentTool.GetComponent<CameraTool>())
                     _delayToolSwap = true;
 
                 ToolManager.instance._CurrentTool.Unequip();
@@ -84,6 +84,7 @@ public class HandHeldTripShot : PlaceableTool
                     }
 
                     _ToolAnimator.SetBool("PickingUp", true);
+                    _ToolAnimator.SetBool("Placing", false);
                 }
                 else
                 {
@@ -138,6 +139,8 @@ public class HandHeldTripShot : PlaceableTool
     {
         if (!_ToolPlaced && _ToolGhost != null && _PlayerControl._PlayerState == PlayerStates.PlayState)
         {
+            NewInputUnSetup();
+
             GameObject tripShotTool = Instantiate(_ToolPrefab);
             TripShotTool TripShotScript = tripShotTool.GetComponent<TripShotTool>();
 
@@ -172,6 +175,7 @@ public class HandHeldTripShot : PlaceableTool
 
             _ToolSelected = false;
 
+            _ToolAnimator.SetBool("PickingUp", false);
             _ToolAnimator.SetBool("Placing", true);
         }
     }

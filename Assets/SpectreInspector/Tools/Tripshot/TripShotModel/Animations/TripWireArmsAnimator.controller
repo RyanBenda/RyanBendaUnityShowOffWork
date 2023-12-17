@@ -177,7 +177,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2167151430343125706, guid: 3532cd8a252646f42b7651dab00f9780, type: 3}
+  m_Motion: {fileID: -2167151430343125706, guid: 3532cd8a252646f42b7651dab00f9780,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -206,7 +207,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2167151430343125706, guid: 3532cd8a252646f42b7651dab00f9780, type: 3}
+  m_Motion: {fileID: -2167151430343125706, guid: 3532cd8a252646f42b7651dab00f9780,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -235,7 +237,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -8667730875409005299, guid: 3532cd8a252646f42b7651dab00f9780, type: 3}
+  m_Motion: {fileID: -8667730875409005299, guid: 3532cd8a252646f42b7651dab00f9780,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -262,7 +265,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1007596165844458111, guid: df6404726aad3ca4f99638a8dc00edc7, type: 3}
+  m_Motion: {fileID: -1007596165844458111, guid: df6404726aad3ca4f99638a8dc00edc7,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -289,7 +293,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -4192310573665854180, guid: 877b81b2df5f88e408bd390f257e4d81, type: 3}
+  m_Motion: {fileID: -4192310573665854180, guid: 877b81b2df5f88e408bd390f257e4d81,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -312,9 +317,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.8026316
+  m_TransitionDuration: 0.11703503
+  m_TransitionOffset: 0.083103165
+  m_ExitTime: 0.9600902
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0

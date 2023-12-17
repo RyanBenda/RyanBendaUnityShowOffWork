@@ -62,14 +62,20 @@ public class HotbarComponent : MonoBehaviour
     {
         if (_PC._PlayerState != PlayerStates.DeathState)
         {
-            ToolManager.instance._HandHeldTripShot.gameObject.SetActive(true);
+            if (ToolManager.instance._HandHeldTripShot.gameObject.activeSelf == false)
+                ToolManager.instance._HandHeldTripShot.gameObject.SetActive(true);
+            else if (ToolManager.instance._CurrentTool != null && !ToolManager.instance._CurrentTool.GetComponent<HandHeldTripShot>() && ToolManager.instance._CurTripShot == null)
+                ToolManager.instance._HandHeldTripShot.CallEnable();
         }
     }
     private void OnToolSwitchTrap(InputAction.CallbackContext obj)
     {
         if (_PC._PlayerState != PlayerStates.DeathState)
         {
-            ToolManager.instance._HandHeldTrap.gameObject.SetActive(true);
+            if (ToolManager.instance._HandHeldTrap.gameObject.activeSelf == false)
+                ToolManager.instance._HandHeldTrap.gameObject.SetActive(true);
+            else if (ToolManager.instance._CurrentTool != null && !ToolManager.instance._CurrentTool.GetComponent<HandHeldTrap>() && ToolManager.instance._CurTrapTool == null)
+                ToolManager.instance._HandHeldTrap.CallEnable();
         }
     }
     private void OnToolGoggle(InputAction.CallbackContext obj)

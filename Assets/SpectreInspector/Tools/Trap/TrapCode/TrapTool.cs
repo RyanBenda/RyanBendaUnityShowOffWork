@@ -67,7 +67,7 @@ public class TrapTool : PlaceableTool
 
     [HideInInspector]
     public PhysicsPlayerController playerControl;
-    private PlayerInput _PlayerInput;
+    public PlayerInput _PlayerInput;
 
     bool _CanGetNewGhosts = true;
     public Canvas _LogoCanvas;
@@ -84,7 +84,7 @@ public class TrapTool : PlaceableTool
 
         if (_PlayerInput == null)
         {
-            //_PlayerInput = playerControl.playerInput;
+            _PlayerInput = playerControl._PlayerInput;
         }
 
         NewInputSetup();
@@ -262,7 +262,7 @@ public class TrapTool : PlaceableTool
         }*/
 
         
-        if (ToolManager.instance._CurrentTool == this || ToolManager.instance._CurrentTool == null)
+        if (/*ToolManager.instance._CurrentTool == this || ToolManager.instance._CurrentTool == null || ToolManager.*/ !ToolManager.instance._HoldingTool)
         {
             NewInputUnSetup();
 
@@ -820,7 +820,7 @@ public class TrapTool : PlaceableTool
     {
         if (_ToolPlaced && playerControl._PlayerState == PlayerStates.PlayState)
         {
-            if (ToolManager.instance._CurrentTool == this.gameObject.GetComponent<TrapTool>() && _CreaturesCaught.Count == 0 && !_TrapLineRenderer._InUse)
+            if (ToolManager.instance._CurrentTool == this && _CreaturesCaught.Count == 0 && !_TrapLineRenderer._InUse)
             {
                 NewInputUnSetup();
 
@@ -830,8 +830,8 @@ public class TrapTool : PlaceableTool
                 ToolManager.instance._CurTrapTool = null;
                 ToolManager.instance._CurrentTool = null;
 
-                //_HandHeldTrap._ToolSlot.TweenDown();
-                //_HandHeldTrap._ToolSlot.PopArrow();
+                _HandHeldTrap._ToolSlot.TweenDown();
+                _HandHeldTrap._ToolSlot.PopArrow();
                
 
                 Destroy(this.gameObject);

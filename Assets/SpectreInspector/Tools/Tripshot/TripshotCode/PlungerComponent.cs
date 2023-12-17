@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.UI.Image;
 
-public class LookAtVelocity : MonoBehaviour
+public class PlungerComponent : MonoBehaviour
 {
     public TripShotTool TripShot;
 
@@ -13,22 +13,17 @@ public class LookAtVelocity : MonoBehaviour
 
     public bool m_NotInPlace = true;
 
-    //GameObject LookAtGameObject;
-
-    public GameObject TripShotRopePrefab;
+    [SerializeField] private GameObject TripShotRopePrefab;
     [HideInInspector]
     public GameObject TripShotRope;
 
-    public GameObject ElectocutePrefab;
+    [SerializeField] private GameObject ElectocutePrefab;
 
     float InitialTime;
-    //public Vector3 LaunchVel;
-    //public float simTime;
 
     public Transform m_PlungerTail;
 
     float interpolateAmount;
-    //float interpolateTime;
 
     [HideInInspector]
     public Vector3 startPoint;
@@ -40,22 +35,20 @@ public class LookAtVelocity : MonoBehaviour
     public Quaternion finalRotation;
 
     float _DistEffect;
-    public float _DistEffectDivider = 10;
+    [SerializeField] private float _DistEffectDivider = 10;
 
-    public float _PlungerFlightTime = 0.1f; //In Seconds
+    [SerializeField] private float _PlungerFlightTime = 0.1f; //In Seconds
 
-
-    public AudioClip[] _Stuck;
-    public AudioSource _source;
+    [SerializeField] private AudioClip[] _Stuck;
+    [SerializeField] private AudioSource _source;
 
     float interpolationEndValue = 1;
 
-    public Animator _PlungerAnimator;
+    [SerializeField] private Animator _PlungerAnimator;
 
     void Awake()
     {
         TripShot = FindObjectOfType<TripShotTool>();
-        //LookAtGameObject = TripShot._LookAtObject;
 
         TripShotRope = Instantiate(TripShotRopePrefab);
         TripShotRope.transform.parent = null;
@@ -66,7 +59,6 @@ public class LookAtVelocity : MonoBehaviour
 
         InitialTime = Time.time;
 
-        //interpolateTime = TripShot._PlungerFlightTime;
         startPoint = TripShot._BarrelLaunchPoint.position;
         midPoint = TripShot._PlungerFlightPathMiddlePoint;
         endPoint = TripShot._PlungerFinalPosTransform.position;
@@ -76,10 +68,9 @@ public class LookAtVelocity : MonoBehaviour
 
     void Update()
     {
+        // Moves the plunger along the path while making it rotate to face the direction its flying
         if (m_NotInPlace)
         {
-
-
             interpolateAmount = (interpolateAmount + (Time.deltaTime / (_PlungerFlightTime + (_DistEffect / _DistEffectDivider))));
 
             this.transform.position = TripShot.MovePlunger(startPoint, midPoint, endPoint, interpolateAmount);
@@ -90,16 +81,6 @@ public class LookAtVelocity : MonoBehaviour
             Vector3 temp = newPos1 - newPos;
 
             this.transform.forward = temp;
-
-            /*RaycastHit hit;
-            if (Physics.Raycast(newPos, newPos1 - newPos, out hit, Vector3.Distance(newPos1, newPos)))
-            {
-                //endPoint = hit.point;
-                TripShot._PlungerFinalPos = hit.point;
-                TripShot._PlungerFinalNormal = hit.normal;
-                //interpolateAmount = 0.9999f;
-                interpolationEndValue = interpolateAmount - 0.0001f;
-            }*/
 
             if (interpolateAmount >= interpolationEndValue)
             {
