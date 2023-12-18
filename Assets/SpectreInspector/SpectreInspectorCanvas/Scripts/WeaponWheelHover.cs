@@ -123,9 +123,9 @@ public class WeaponWheelHover : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         rectTransform.DOScale(_StartScale * _scaleMult, 0.25f).SetUpdate(true);
 
-        AudioClip audioClip = _Sounds[Random.Range(0, _Sounds.Length - 1)];
+        /*AudioClip audioClip = _Sounds[Random.Range(0, _Sounds.Length - 1)];
         _SoundEmitter.clip = audioClip;
-        _SoundEmitter.Play();
+        _SoundEmitter.Play();*/
 
         //if (_IsPhotos)
             //_sorting.sortingLayerID = 2;

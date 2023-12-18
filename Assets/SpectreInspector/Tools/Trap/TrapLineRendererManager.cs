@@ -15,20 +15,18 @@ public class TrapLineRendererManager : MonoBehaviour
 
     public TrapTool _TrapTool;
 
-    public float _LineBends = 2;
-
+    [SerializeField] private float _LineBends = 2;
 
     public List<Transform> _BendPoints = new List<Transform>();
 
     public CreatureBrain _Creature;
 
-    public int _Resolution = 50;
-    
+    [SerializeField] private int _Resolution = 50;
 
-    public float _MidPointHeight = 20;
+    [SerializeField] private float _MidPointHeight = 20;
 
-    public float _PathTravelTime = 2;
-    public float _LineDrawTime = 2;
+    [SerializeField] private float _PathTravelTime = 2;
+    [SerializeField] private float _LineDrawTime = 2;
 
     bool _FollowingPath = false;
 
@@ -39,16 +37,13 @@ public class TrapLineRendererManager : MonoBehaviour
 
     List<Vector3> _LineRendererPath = new List<Vector3>();
 
-    public LayerMask _CollisionRaycast;
+    [SerializeField] private LayerMask _CollisionRaycast;
 
     [HideInInspector]
     public bool _VerifiedPath = false;
 
+    [SerializeField] private int _NumOfChecks = 100;
 
-    public int _NumOfChecks = 100;
-
-
-    //[HideInInspector]
     public bool _InUse;
     bool _LineFormed;
     bool _ClosedTrap;
@@ -57,7 +52,6 @@ public class TrapLineRendererManager : MonoBehaviour
 
     public LineVFXManager _LineVFX;
 
-    // Start is called before the first frame update
     void Awake()
     {
         _LineRenderer = GetComponent<LineRenderer>();
@@ -69,19 +63,15 @@ public class TrapLineRendererManager : MonoBehaviour
             objToSpawn.transform.parent = this.transform;
             objToSpawn.transform.localPosition = Vector3.zero;
             _BendPoints.Add(objToSpawn.transform);
-        }
-
-        
+        }  
     }
 
-    
-
-    // Update is called once per frame
     void Update()
     {
-
         if (_InUse)
         {
+            // Tries to form a path around obstacles to pull ghost in
+            // if it fails to find a path within a set amount it will go with default route
             int checks = 0;
             while (!_VerifiedPath)
             {
@@ -94,18 +84,15 @@ public class TrapLineRendererManager : MonoBehaviour
 
                 if (checks == _NumOfChecks)
                 {
-                    //_LineRenderer.positionCount = 0;
                     SetStraightBends();
                     DrawLineRendererPath();
                     _VerifiedPath = true;
                 }
             }
 
-
-
+            // Drawing line to destination
             if (_VerifiedPath && _LineRenderer.positionCount != 0 && _LineFormed == false)
             {
-
                 _LineT += Time.deltaTime / _LineDrawTime;
 
                 Gradient c = _LineRenderer.colorGradient;
@@ -119,8 +106,6 @@ public class TrapLineRendererManager : MonoBehaviour
                 _LineRenderer.colorGradient = c;
 
                 _LineVFX.ShowAlpha(_LineT);
-
-                //CheckPath();
 
                 if (_LineT >= 1)
                 {
@@ -138,16 +123,14 @@ public class TrapLineRendererManager : MonoBehaviour
                 }
             }
 
+            // pulls creature along path
             if (_FollowingPath && _T < 1)
             {
-
                 _T += Time.deltaTime / _PathTravelTime;
-
 
                 _Creature.transform.position = AnyraticLerp(_LineRendererPath, _T);
 
                 _LineVFX.HideAlpha(_T);
-
 
                 while (_T >= _DurDivRes / _PathTravelTime)
                 {
@@ -167,7 +150,6 @@ public class TrapLineRendererManager : MonoBehaviour
                 if (_LineRenderer.positionCount == 0)
                 {
                     _LineRenderer.positionCount = 0;
-                    //_FollowingPath = false;
                 }
 
                 if (_T >= 1)
@@ -176,10 +158,6 @@ public class TrapLineRendererManager : MonoBehaviour
                 }
             }
 
-
-            
-
-            //if (_IsAnimating)
             DrawLineRendererPath();
         }
     }
@@ -192,13 +170,10 @@ public class TrapLineRendererManager : MonoBehaviour
             _DurDivRes = _PathTravelTime / _Resolution;
             _T = 0;
 
-
             _Creature.GetComponent<NavMeshAgent>().enabled = false;
-            
 
             _LineRenderer.positionCount = _Resolution;
             _LineRendererPath.Clear();
-
 
             for (int i = 0; i < _Resolution; i++)
             {
@@ -209,15 +184,13 @@ public class TrapLineRendererManager : MonoBehaviour
             Vector3 scale = _Creature.transform.localScale;
 
             Sequence sequence = DOTween.Sequence();
-            //sequence.Append(_Creature.transform.DOPath(path, _PathTravelTime));
+
             sequence.Append(_Creature.transform.DOScale(Vector3.zero, _PathTravelTime));
             sequence.Append(_Creature.transform.DOScale(scale, 0));
             sequence.Play();
         }
     }
 
-
-    
     void CheckPath()
     {
         for (int i = 0; i < _LineRenderer.positionCount - 1; i++)
@@ -226,7 +199,6 @@ public class TrapLineRendererManager : MonoBehaviour
             RaycastHit hit;
             if (Physics.SphereCast(_LineRenderer.GetPosition(i), 0.1f, _LineRenderer.GetPosition(i + 1) - _LineRenderer.GetPosition(i), out hit, Vector3.Distance(_LineRenderer.GetPosition(i + 1), _LineRenderer.GetPosition(i)), _CollisionRaycast))
             {
-
                 _VerifiedPath = false;
 
                 return;
@@ -258,44 +230,21 @@ public class TrapLineRendererManager : MonoBehaviour
 
         Vector3 previousDrawPoint = launchpos;
 
-        
-
-       
+        // sets positions for Line Renderer
         for (int i = 0; i < _LineRenderer.positionCount - 1; i++)
         {
-
             float simulationTime = i / (float)_Resolution;
 
-
-
             Vector3 drawPoint = AnyraticLerp(vector3s, simulationTime);
-
 
             _LineRenderer.SetPosition(i, previousDrawPoint);
             _LineRenderer.SetPosition(i + 1, drawPoint);
 
-
-            /*// RayCast cuts the path early if it collides with another object
-            RaycastHit hit;
-            if (Physics.SphereCast(previousDrawPoint, 0.1f, drawPoint - previousDrawPoint, out hit, Vector3.Distance(drawPoint, previousDrawPoint), _CollisionRaycast))
-            {
-
-                _VerifiedPath = false;
-
-                return;
-            }
-            else if (i == _Resolution - 2)
-            {
-                _VerifiedPath = true;
-            }*/
-
             previousDrawPoint = drawPoint;
-        }
-
-        
-        
+        }     
     }
 
+    // randomly generates anchors for lerp path to make the effect look more interesting
     void SetBends()
     {
         float val = _BendPoints.Count / 2;
@@ -322,14 +271,11 @@ public class TrapLineRendererManager : MonoBehaviour
             _BendPoints[i].position = new Vector3(xPos, yPos, zPos);
         }
 
-
         Gradient c = _LineRenderer.colorGradient;
 
         GradientAlphaKey[] alphaKeys = c.alphaKeys;
 
-
         alphaKeys[alphaKeys.Length - 1].time = 0;
-
 
         c.alphaKeys = alphaKeys;
 
@@ -342,6 +288,7 @@ public class TrapLineRendererManager : MonoBehaviour
         _LineFormed = false;
     }
 
+    // Default anchor points
     void SetStraightBends()
     {
         float val = _BendPoints.Count / 2;
@@ -368,14 +315,11 @@ public class TrapLineRendererManager : MonoBehaviour
             _BendPoints[i].position = new Vector3(xPos, yPos, zPos);
         }
 
-
         Gradient c = _LineRenderer.colorGradient;
 
         GradientAlphaKey[] alphaKeys = c.alphaKeys;
 
-
         alphaKeys[alphaKeys.Length - 1].time = 0;
-
 
         c.alphaKeys = alphaKeys;
 
@@ -388,6 +332,8 @@ public class TrapLineRendererManager : MonoBehaviour
         _LineFormed = false;
     }
 
+    // goes through a list of any size containing the start, end and
+    // anchor positions and finds the point on the path at the specificied time
     Vector3 AnyraticLerp(List<Vector3> _posList, float t)
     {
         List<Vector3> List1 = new List<Vector3>();
@@ -398,11 +344,8 @@ public class TrapLineRendererManager : MonoBehaviour
 
         List1.Add(_Creature.transform.position);
 
-
-
         while (List1.Count != 2)
         {
-
             for (int i = 0; i < List1.Count - 1; i++)
             {
                 Vector3 Lerped = Vector3.Lerp(List1[i], List1[i + 1], t);
@@ -419,7 +362,6 @@ public class TrapLineRendererManager : MonoBehaviour
 
             List2.Clear();
         }
-
 
         return Vector3.Lerp(List1[0], List1[1], t);
     }

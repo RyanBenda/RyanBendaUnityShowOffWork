@@ -36,25 +36,25 @@ public class Compendium : MonoBehaviour
 
     private void Awake()
     {
-        SelectCreature(_StartingCreature);
-        _StartingRender.SetActive(true);
-        _CurRender = _StartingRender;
+        //SelectCreature(_StartingCreature);
+        //_StartingRender.SetActive(true);
+        //_CurRender = _StartingRender;
         //_RotateCompendium._CameraRotator = _StartCam;
-        _CurCamera = _StartCam;
+        //_CurCamera = _StartCam;
     }
 
     private void OnEnable()
     {
-        Tab.transform.localScale = Vector3.zero;
+        //Tab.transform.localScale = Vector3.zero;
         Pad.transform.position = PadOffscreen.transform.position;
         Pad.transform.DOMoveY(PadOnScreen.transform.position.y, TimeToComplete).SetEase(Ease.OutSine).SetUpdate(true);
-        Tab.transform.DOScale(Vector3.one, TimeToComplete).SetEase(Ease.OutBounce).SetUpdate(true);
+        //Tab.transform.DOScale(Vector3.one, TimeToComplete).SetEase(Ease.OutBounce).SetUpdate(true);
     }
 
-    public void SelectCreature(CreatureScriptableObject creature)
+    /*public void SelectCreature(CreatureScriptableObject creature)
     {
         _CreatureNameImage.sprite = creature._CompendiumPlate;
         _CreatureImage.texture = creature._Image;
         _CreatureDescriptionText.text = creature._Description;
-    }
+    }*/
 }

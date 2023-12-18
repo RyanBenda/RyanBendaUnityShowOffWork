@@ -43,11 +43,11 @@ public class CameraTool : HandheldTool
 
 
     public GameObject _RaycastShoot;
-    public PlayerInput playerInput;
+    public PlayerInput _PlayerInput;
 
     public List<GameObject> _OtherTools = new List<GameObject>();
 
-    //public HotBarPos _ToolSlot;
+    public HotBarPos _ToolSlot;
 
     public Image _FadeToBlack;
     bool _FadingToBlack;
@@ -86,11 +86,11 @@ public class CameraTool : HandheldTool
     public GameObject _TooltipUI;
     public GameObject _CrosshairUI;
 
-    //public CameraPhotosPage _PhotoPage;
+    public CameraPhotosPage _PhotoPage;
 
     public Plane[] planes;
 
-    PhysicsPlayerController playerControl;
+    PhysicsPlayerController _PlayerControl;
 
     private void Awake()
     {
@@ -107,21 +107,21 @@ public class CameraTool : HandheldTool
         if (photoFrame == null)
             photoFrame = FindObjectOfType<PhotoPopInEffect>(true);
 
-        //if (_PhotoPage == null)
-            //_PhotoPage = FindObjectOfType<CameraPhotosPage>(true);
+        if (_PhotoPage == null)
+            _PhotoPage = FindObjectOfType<CameraPhotosPage>(true);
 
         //if (_CompendiumButtons == null)
             //_CompendiumButtons = FindObjectsOfType<CompendiumButtonComponent>(true);
 
         CameraInstance = this;
 
-        playerInput = FindObjectOfType<PlayerInput>();
+        _PlayerInput = FindObjectOfType<PlayerInput>();
 
-        //playerInput.actions["PrimaryAction"].performed += DoSnap;
-        //playerInput.actions["PrimaryAction"].Enable();
+        /*_PlayerInput.actions["PrimaryAction"].performed += DoSnap;
+        _PlayerInput.actions["PrimaryAction"].Enable();
 
-        //playerInput.actions["SecondaryAction"].performed += DoUnequip;
-        //playerInput.actions["SecondaryAction"].Enable();
+        _PlayerInput.actions["SecondaryAction"].performed += DoUnequip;
+        _PlayerInput.actions["SecondaryAction"].Enable();*/
 
         this.gameObject.SetActive(false);   
     }
@@ -138,8 +138,8 @@ public class CameraTool : HandheldTool
 
     private void OnEnable()
     {
-        if (playerControl == null)
-            playerControl = Camera.main.transform.parent.GetComponent<PhysicsPlayerController>();
+        if (_PlayerControl == null)
+            _PlayerControl = Camera.main.transform.parent.GetComponent<PhysicsPlayerController>();
 
         //playerInput = FindObjectOfType<PlayerInput>();
 
@@ -173,18 +173,18 @@ public class CameraTool : HandheldTool
                 _OtherTools[i].gameObject.SetActive(false);
             }
 
-            //_ToolSlot.TweenUp();
-            //_ToolSlot.MoveArrow(3);
+            _ToolSlot.TweenUp();
+            _ToolSlot.MoveArrow(3);
 
             _ToolAnimator.SetBool("Equipping", true);
 
 
 
-            playerInput.actions["PrimaryAction"].performed += DoSnap;
-            playerInput.actions["PrimaryAction"].Enable();
+            _PlayerInput.actions["PrimaryAction"].performed += DoSnap;
+            _PlayerInput.actions["PrimaryAction"].Enable();
 
-            playerInput.actions["Unequip"].performed += DoUnequip;
-            playerInput.actions["Unequip"].Enable();
+            _PlayerInput.actions["Unequip"].performed += DoUnequip;
+            _PlayerInput.actions["Unequip"].Enable();
         }
         else
         {
@@ -195,11 +195,11 @@ public class CameraTool : HandheldTool
 
     void NewInputSetup()
     {
-        playerInput.actions["PrimaryAction"].performed += DoSnap;
-        playerInput.actions["PrimaryAction"].Enable();
+        _PlayerInput.actions["PrimaryAction"].performed += DoSnap;
+        _PlayerInput.actions["PrimaryAction"].Enable();
 
-        playerInput.actions["Unequip"].performed += DoUnequip;
-        playerInput.actions["Unequip"].Enable();
+        _PlayerInput.actions["Unequip"].performed += DoUnequip;
+        _PlayerInput.actions["Unequip"].Enable();
 
     }
 
@@ -305,6 +305,9 @@ public class CameraTool : HandheldTool
 
                         photoFrame.SetOffScreen();
 
+                        if (_Cam)
+                            _Cam.fieldOfView = _fov;
+
                     }
                 }
                 else if (_FadingToClear)
@@ -325,7 +328,7 @@ public class CameraTool : HandheldTool
         }
         else
         {
-            if (_Cam.fieldOfView - Input.mouseScrollDelta.y * 2 >= 10 && _Cam.fieldOfView - Input.mouseScrollDelta.y * 2 <= 90 && playerControl._PlayerState == PlayerStates.PlayState)
+            if (_Cam.fieldOfView - Input.mouseScrollDelta.y * 2 >= 10 && _Cam.fieldOfView - Input.mouseScrollDelta.y * 2 <= 90 && _PlayerControl._PlayerState == PlayerStates.PlayState)
             {
                 _Cam.fieldOfView -= Input.mouseScrollDelta.y * 2;
 
@@ -376,9 +379,7 @@ public class CameraTool : HandheldTool
 
     IEnumerator CapturePhoto()
     {
-        //_CameraToolUI.SetActive(false);
-        //_CrosshairUI.SetActive(false);
-        //_TooltipUI.SetActive(false);
+        
 
         for (int i = 0; i < _UiToHide.Length; i++)
         {
@@ -588,7 +589,7 @@ public class CameraTool : HandheldTool
         ShootRaycasts();
 
         Sprite photoSprite = Sprite.Create(screenCaptures[screenCapturesIndex], new Rect(0.0f, 0.0f, screenCaptures[screenCapturesIndex].width, screenCaptures[screenCapturesIndex].height), new Vector2(0.5f, 0.5f), 100.0f);
-        CheckForGhost(screenCaptures[screenCapturesIndex]);
+        //CheckForGhost(screenCaptures[screenCapturesIndex]);
 
         screenCapturesIndex++;
 
@@ -597,11 +598,11 @@ public class CameraTool : HandheldTool
 
 
 
-        //PhotoDisplayArea.sprite = photoSprite;
+        PhotoDisplayArea.sprite = photoSprite;
 
-        /*if (_PhotoPage._Photos.Count == 16)
+        if (_PhotoPage._Photos.Count == 16)
             _PhotoPage._Photos.RemoveAt(0);
-        _PhotoPage._Photos.Add(photoSprite);*/
+        _PhotoPage._Photos.Add(photoSprite);
 
         photoFrame.gameObject.SetActive(true);
 
@@ -610,7 +611,7 @@ public class CameraTool : HandheldTool
         else
             photoFrame.MoveOffScreen(true);
         
-        //_TooltipUI.SetActive(true);
+        _TooltipUI.SetActive(true);
     }
 
     void RemovePhoto()
@@ -636,7 +637,7 @@ public class CameraTool : HandheldTool
 
     void DoSnap(InputAction.CallbackContext obj)
     {
-        if (playerControl._PlayerState == PlayerStates.PlayState)
+        if (_PlayerControl._PlayerState == PlayerStates.PlayState)
         {
             if (!_CameraToolUIScript._Inuse)
             {
@@ -693,15 +694,14 @@ public class CameraTool : HandheldTool
             ToolManager.instance._CurrentTool._ToolSelected = false;
         ToolManager.instance._CurrentTool = null;
         ToolManager.instance._HoldingTool = false;
-        if (_Cam)
-            _Cam.fieldOfView = _fov;
+        
 
-        playerInput.actions["PrimaryAction"].performed -= DoSnap;
-        playerInput.actions["PrimaryAction"].Disable();
+        _PlayerInput.actions["PrimaryAction"].performed -= DoSnap;
+        _PlayerInput.actions["PrimaryAction"].Disable();
 
 
-        playerInput.actions["Unequip"].performed -= DoUnequip;
-        playerInput.actions["Unequip"].Disable();
+        _PlayerInput.actions["Unequip"].performed -= DoUnequip;
+        _PlayerInput.actions["Unequip"].Disable();
 
         if (_SwappingTool != null)
         {
@@ -712,11 +712,11 @@ public class CameraTool : HandheldTool
         {
 
 
-            //_ToolSlot._Arrow.gameObject.SetActive(false);//////////////////////////////
+            _ToolSlot._Arrow.gameObject.SetActive(false);
         }
 
-        //_ToolSlot.TweenDown();
-        //Destroy(_CameraToolUI);
+        _ToolSlot.TweenDown();
+ 
         this.gameObject.SetActive(false);
     }
 

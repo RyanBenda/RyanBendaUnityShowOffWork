@@ -39,7 +39,7 @@ public class GoggleTool : HandheldTool
 
     bool _PreventSwap;
     //bool _RemovingGogglesBool;
-    //public HotBarPos _ToolSlot;
+    public HotBarPos _ToolSlot;
 
 
     public Outline[] _OutlineObjects;
@@ -47,10 +47,10 @@ public class GoggleTool : HandheldTool
     public List<GameObject> pooledPaths;
     public GameObject pathsToPool;
     public int amountToPool = 10;
-    //public PhysicsPlayerController _Player;
+    public PhysicsPlayerController _Player;
     public LayerMask _TrailSpawnPosLayerMask;
 
-    //public GhostRoom[] _Rooms;
+    public GhostRoom[] _Rooms;
 
     private PlayerInput _PlayerInput;
 
@@ -58,7 +58,7 @@ public class GoggleTool : HandheldTool
 
     private void Awake()
     {
-        /*pooledPaths = new List<GameObject>();/////////////////////////////////////////////////////////////////////
+        pooledPaths = new List<GameObject>();
         GameObject tmp;
         for (int i = 0; i < amountToPool; i++)
         {
@@ -70,17 +70,17 @@ public class GoggleTool : HandheldTool
                 path._GhostToGoTo = (Ghosts)i;
             }
             pooledPaths.Add(tmp);
-        }*/
+        }
 
         if (playerControl == null)
             playerControl = FindObjectOfType<PhysicsPlayerController>();
 
-        //_Rooms = FindObjectsOfType<GhostRoom>();
+        _Rooms = FindObjectsOfType<GhostRoom>();
 
         
     }
 
-    public GameObject GetPooledObject()//////////////////////////////////////////////////////////////////////
+    public GameObject GetPooledObject()
     {
         for (int i = 0; i < amountToPool; i++)
         {
@@ -107,7 +107,7 @@ public class GoggleTool : HandheldTool
         {
             ToolManager.instance._CurrentTool._SwappingTool = this;
 
-            if (ToolManager.instance._CurrentTool.GetComponent<HandHeldTrap>() || ToolManager.instance._CurrentTool.GetComponent<CameraTool>())
+            if (ToolManager.instance._CurrentTool.GetComponent<HandHeldTripShot>() || ToolManager.instance._CurrentTool.GetComponent<HandHeldTrap>() || ToolManager.instance._CurrentTool.GetComponent<CameraTool>())
                 _delayToolSwap = true;
 
             ToolManager.instance._CurrentTool.Unequip();
@@ -121,15 +121,15 @@ public class GoggleTool : HandheldTool
 
         if (!_PreventSwap)
         {
-            //_ToolSlot.TweenUp();
-            //_ToolSlot.MoveArrow(2);
+            _ToolSlot.TweenUp();
+            _ToolSlot.MoveArrow(2);
 
             if (ToolManager.instance._CurrentTool != null && ToolManager.instance._CurrentTool != this)
                 ToolManager.instance._CurrentTool.Unequip();
 
             if (_PlayerInput == null)
             {
-                //_PlayerInput = playerControl.playerInput; ///////////////////////////
+                _PlayerInput = playerControl._PlayerInput;
             }
 
             NewInputSetup();
@@ -140,9 +140,10 @@ public class GoggleTool : HandheldTool
 
             base.Equip();
 
-            for (int i = 0; i < _OtherTools.Count; i++)
+            foreach (Tool tool in ToolManager.instance._HandToolsList)
             {
-                _OtherTools[i].gameObject.SetActive(false);
+                if (tool != null & tool != this)
+                    tool.gameObject.SetActive(false);
             }
 
             //BeginFadeToBlack();
@@ -218,25 +219,25 @@ public class GoggleTool : HandheldTool
                     Vector3 hitpos = playerControl.transform.position;
                     hitpos.y -= 1f;
 
-                    /*if (Physics.Raycast(_Player.transform.position, -Vector3.up, out hit, 5, _TrailSpawnPosLayerMask))
+                    if (Physics.Raycast(_Player.transform.position, -Vector3.up, out hit, 5, _TrailSpawnPosLayerMask))
                     {
                         hitpos = hit.point;
                         hitpos.y += 0.4f;
-                    }*/
+                    }
 
 
 
-                    /*for (int i = 0; i < _Rooms.Length; i++)
+                    for (int i = 0; i < _Rooms.Length; i++)
                     {
                         if (_Rooms[i]._RoomInUse)
                         {
                             GameObject trail = GetPooledObject();
                             trail.transform.position = hitpos;
                             trail.SetActive(true);
-                            //trail.GetComponent<GoggleVisualPath>()._Agent.destination = _Rooms[i].transform.position;////////////////////////////////////
+                            trail.GetComponent<GoggleVisualPath>()._Agent.destination = _Rooms[i].transform.position;
                         }
                         
-                    }*/
+                    }
                 }
             }
         }
@@ -339,10 +340,10 @@ public class GoggleTool : HandheldTool
         {
 
 
-            //_ToolSlot._Arrow.gameObject.SetActive(false);//////////////////////////////
+            _ToolSlot._Arrow.gameObject.SetActive(false);
         }
 
-        //_ToolSlot.TweenDown();
+        _ToolSlot.TweenDown();
 
         this.gameObject.SetActive(false);
     }

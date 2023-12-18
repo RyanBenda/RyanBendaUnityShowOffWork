@@ -31,7 +31,8 @@ public class CameraScript : MonoBehaviour
 
     void Update()
     {
-        RotateCamera();
+        if (m_Player._PlayerState == PlayerStates.PlayState)
+            RotateCamera();
     }
 
     void RotateCamera()

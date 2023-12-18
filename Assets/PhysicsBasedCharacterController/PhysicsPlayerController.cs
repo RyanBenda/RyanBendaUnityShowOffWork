@@ -11,8 +11,6 @@ public class PhysicsPlayerController : MonoBehaviour
 
     bool m_NewMovement;
 
-    //public float m_InterpolationSpeed;
-
     public bool m_CanJump = false;
     public float m_JumpForce = 5;
     public bool m_Grounded = false;
@@ -43,71 +41,77 @@ public class PhysicsPlayerController : MonoBehaviour
 
     void Update()
     {
-        m_Grounded = GroundedCheck();
+        if (_PlayerState == PlayerStates.PlayState)
+        {
+            m_Grounded = GroundedCheck();
 
-        if (!m_Grounded)
-        {
-            m_prevFrameJumpCheck = true;
-        }
-        if (m_prevFrameJumpCheck && m_Grounded)
-        {
-            m_jumpTally = 0;
-            m_prevFrameJumpCheck = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && m_CanJump)
-        {
-            if (m_Grounded || m_jumpTally < m_MaxJumps)
+            if (!m_Grounded)
             {
-                m_jumpTally++;
-                playerRigidbody.AddForce(new Vector3(playerRigidbody.velocity.x, m_JumpForce, playerRigidbody.velocity.z));
+                m_prevFrameJumpCheck = true;
             }
-        }
+            if (m_prevFrameJumpCheck && m_Grounded)
+            {
+                m_jumpTally = 0;
+                m_prevFrameJumpCheck = false;
+            }
 
-        Camera.main.transform.parent.transform.position = this.transform.position;
+            if (Input.GetKeyDown(KeyCode.Space) && m_CanJump)
+            {
+                if (m_Grounded || m_jumpTally < m_MaxJumps)
+                {
+                    m_jumpTally++;
+                    playerRigidbody.AddForce(new Vector3(playerRigidbody.velocity.x, m_JumpForce, playerRigidbody.velocity.z));
+                }
+            }
+
+            Camera.main.transform.parent.transform.position = this.transform.position;
+        }
     }
 
     void FixedUpdate()
     {
-        Vector3 moveDir = calcMoveDir();
-        if (moveDir.x != 0 || moveDir.z != 0)
-            m_NewMovement = true;
-
-        Vector3 camUpNormalized = Camera.main.transform.forward;
-        camUpNormalized.y = 0.0f;
-        camUpNormalized.Normalize();
-
-        Vector3 camRightNormalized = Camera.main.transform.right;
-        camRightNormalized.y = 0.0f;
-        camRightNormalized.Normalize();
-
-        Vector3 cameraForwardCopy = Vector3.zero;
-        cameraForwardCopy += camUpNormalized * moveDir.z;
-        cameraForwardCopy += camRightNormalized * moveDir.x;
-
-        Vector3 force = cameraForwardCopy.normalized * (m_MoveSpeed * 1000000) * Time.deltaTime;
-
-        if (canSprint && Input.GetKey(KeyCode.LeftShift))
-            force *= m_SprintSpeedMultiplier;
-
-        bool m_isMovement = false;
-
-        if (m_NewMovement)
+        if (_PlayerState == PlayerStates.PlayState)
         {
-            playerRigidbody.AddForce(force);
-            m_NewMovement = false;
-            m_isMovement = true;
-        }
+            Vector3 moveDir = calcMoveDir();
+            if (moveDir.x != 0 || moveDir.z != 0)
+                m_NewMovement = true;
 
-        Vector3 curVel = playerRigidbody.velocity;
-        curVel.y = 0.0f;
-        if (m_Grounded || m_isMovement)
-        {
-            playerRigidbody.AddForce(-curVel * m_CustomDrag);
-            m_isMovement = false;
+            Vector3 camUpNormalized = Camera.main.transform.forward;
+            camUpNormalized.y = 0.0f;
+            camUpNormalized.Normalize();
+
+            Vector3 camRightNormalized = Camera.main.transform.right;
+            camRightNormalized.y = 0.0f;
+            camRightNormalized.Normalize();
+
+            Vector3 cameraForwardCopy = Vector3.zero;
+            cameraForwardCopy += camUpNormalized * moveDir.z;
+            cameraForwardCopy += camRightNormalized * moveDir.x;
+
+            Vector3 force = cameraForwardCopy.normalized * (m_MoveSpeed * 1000000) * Time.deltaTime;
+
+            if (canSprint && Input.GetKey(KeyCode.LeftShift))
+                force *= m_SprintSpeedMultiplier;
+
+            bool m_isMovement = false;
+
+            if (m_NewMovement)
+            {
+                playerRigidbody.AddForce(force);
+                m_NewMovement = false;
+                m_isMovement = true;
+            }
+
+            Vector3 curVel = playerRigidbody.velocity;
+            curVel.y = 0.0f;
+            if (m_Grounded || m_isMovement)
+            {
+                playerRigidbody.AddForce(-curVel * m_CustomDrag);
+                m_isMovement = false;
+            }
+            else
+                playerRigidbody.AddForce((-curVel * m_CustomDrag) / m_LessAirDrag);
         }
-        else
-            playerRigidbody.AddForce((-curVel * m_CustomDrag) / m_LessAirDrag);
     }
 
     Vector3 calcMoveDir()

@@ -17,7 +17,6 @@ public class CaughtPrefabComponent : MonoBehaviour
     public float _CreatureBannerTimer;
     float _RealCreatureBannerTimer;
 
-
     float OriginalUniformScale;
 
     private void Awake()
@@ -32,13 +31,8 @@ public class CaughtPrefabComponent : MonoBehaviour
 
         transform.DOScale(OriginalUniformScale, 0.45f).SetEase(Ease.OutBounce);
         transform.DOShakeRotation(0.35f, 40);
-
     }
 
-
-
-
-    // Update is called once per frame
     void Update()
     {
         if (_CreatureBannerActive && _RealCreatureBannerTimer > 0)
@@ -49,16 +43,11 @@ public class CaughtPrefabComponent : MonoBehaviour
         else if (_CreatureBannerActive)
         {
             _CreatureBannerActive = false;
-            //this.gameObject.SetActive(false);
 
             Sequence sequence = DOTween.Sequence();
             sequence.Append(transform.DOScale(0, 0.45f)
                 .SetEase(Ease.InBounce).OnComplete(() => this.gameObject.SetActive(false)));
             sequence.Play();
-            
-            //_RealCreatureBannerTimer = _CreatureBannerTimer;
-
-            
         }
     }
 
@@ -67,12 +56,10 @@ public class CaughtPrefabComponent : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-
     public void SetCreature(Sprite GhostIcon, Sprite NamePlate)
     {
         _CreatureImage.sprite = GhostIcon;
         _CreatureNamePlate.sprite = NamePlate;
         _CreatureBannerActive = true;
-
     }
 }

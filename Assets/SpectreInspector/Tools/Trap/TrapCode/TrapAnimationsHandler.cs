@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class TrapAnimationsHandler : MonoBehaviour
 {
-    public TrapTool _Trap;
-    //public GameObject _TrapModel;
+    [SerializeField] private TrapTool _Trap;
 
     int i = 0;
 
@@ -34,12 +33,6 @@ public class TrapAnimationsHandler : MonoBehaviour
             _LineRendererChildren.Add(_Trap._TrapLineRenderer.transform.GetChild(0));
             _Trap._TrapLineRenderer.transform.GetChild(0).parent = null;
         }
-    }
-
-    public void TrapExploded()
-    {
-       
-            
     }
 
     public void ReleaseGhosts()

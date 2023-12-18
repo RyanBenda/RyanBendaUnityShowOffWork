@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class TripShotCollider : MonoBehaviour
 {
     TripShotTool _Tripshot;
-    // Start is called before the first frame update
     void Start()
     {
         _Tripshot = FindObjectOfType<TripShotTool>();
@@ -14,8 +13,6 @@ public class TripShotCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("TRIGGERED");
-
         if (other.gameObject.GetComponent<CreatureBrain>() != null)
         {
            _Tripshot._Plunger.GetComponent<PlungerComponent>().SpawnElectrocute(other.ClosestPoint(this.transform.position));
@@ -24,6 +21,7 @@ public class TripShotCollider : MonoBehaviour
 
             crea.isDizzy = true;
 
+            // Removes Clone Creatures when you catch the real Creature
             CreatureObjectPooling _pooledCrea = other.gameObject.GetComponent<CreatureObjectPooling>();
 
             if (_pooledCrea)

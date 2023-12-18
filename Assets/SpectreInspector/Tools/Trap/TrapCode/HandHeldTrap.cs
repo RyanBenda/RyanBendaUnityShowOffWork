@@ -5,20 +5,15 @@ using UnityEngine.InputSystem;
 
 public class HandHeldTrap : PlaceableTool
 {
-
-    
-
-
     [Header("Standard:")]
     public Animator _ToolAnimator;
 
-    public Transform _TrapHandModelTransform;
+    [SerializeField] private Transform _TrapHandModelTransform;
 
     bool _PreventSwap;
     Vector3 _Normal;
 
     public HotBarPos _ToolSlot;
-
 
     public PhysicsPlayerController playerControl;
     private PlayerInput _PlayerInput;
@@ -29,22 +24,14 @@ public class HandHeldTrap : PlaceableTool
         {
             playerControl = FindObjectOfType<PhysicsPlayerController>();
         }
-
-        
     }
 
     private void OnEnable()
     {
-
-
         if (_PlayerInput == null)
         {
             _PlayerInput = playerControl._PlayerInput;
         }
-
-
-
-
 
         bool _delayToolSwap = false;
         if (ToolManager.instance._CurrentTool != null && ToolManager.instance._CurrentTool != this)
@@ -65,15 +52,12 @@ public class HandHeldTrap : PlaceableTool
 
         if (!_PreventSwap)
         {
-
             _ToolSlot.MoveArrow(1);
-
 
             if (ToolManager.instance._CurTrapTool == null)
             {
                 _ToolSlot.TweenUp();
                 
-
                 ToolManager.instance._CurrentTool = this;
                 ToolManager.instance._HoldingTool = true;
                 _ToolSelected = true;
@@ -114,19 +98,16 @@ public class HandHeldTrap : PlaceableTool
 
     public override void Unequip()
     {
-
         NewInputUnSetup();
 
         base.Unequip();
 
         _ToolSlot.TweenDown();
 
-
         if (_SwappingTool == null)
         {
             _ToolSlot.PopArrow();
         }
-
 
         if (_ToolGhost)
             Destroy(_ToolGhost);
@@ -144,25 +125,20 @@ public class HandHeldTrap : PlaceableTool
         if (!_ToolPlaced && _ToolGhost != null && playerControl._PlayerState == PlayerStates.PlayState)
         {
             NewInputUnSetup();
-            //RumbleManager.instance.RumblePulse(1, 1, 0.25f);
 
             GameObject trapTool = Instantiate(_ToolPrefab);
             TrapTool trapToolScript = trapTool.GetComponent<TrapTool>();
 
             trapTool.transform.parent = null;
-            //trapTool.transform.position = _ToolGhost.transform.position;
             trapTool.transform.position = _TrapHandModelTransform.position;
             trapTool.transform.rotation = _TrapHandModelTransform.rotation;
 
-            //trapToolScript._ToolPlaced = true;
             trapToolScript._FinalPos = _ToolGhost.transform.position;
             trapToolScript._FinalNorm = _Normal;
 
             trapToolScript._ToolGhostExists = false;
-            //trapToolScript._ToolManager = playerControl._ToolManager;
             trapToolScript.playerControl = playerControl;
             trapToolScript._PlayerInput = _PlayerInput;
-            //trapToolScript._GPG = GravPolt_Gun;
             ToolManager.instance._CurTrapTool = trapToolScript;
 
             _ToolGhostExists = false;
@@ -173,17 +149,14 @@ public class HandHeldTrap : PlaceableTool
 
             base.Unequip();
 
-            //trapToolScript.Equip();
             trapToolScript._HandHeldTrap = this;
 
-            //this.gameObject.SetActive(false);
             _ToolSelected = false;
             _ToolAnimator.SetBool("PickingUp", false);
             _ToolAnimator.SetBool("Placing", true);
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (_ToolSelected)
@@ -209,11 +182,6 @@ public class HandHeldTrap : PlaceableTool
 
                         Debug.Log(hit.collider.gameObject.name);
                     }
-
-                    //if (Input.GetMouseButtonDown(0))
-                    //{
-                    //    PlaceTool();
-                    //}
                 }
                 else if (_ToolGhost != null && _ToolGhostExists)
                 {
@@ -232,12 +200,6 @@ public class HandHeldTrap : PlaceableTool
             Destroy(_ToolGhost);
             _ToolGhostExists = false;
         }
-
-
-        //if (Input.GetMouseButtonDown(1))
-        //{
-        //    Unequip();
-        //}
 
         if (_ToolGhost == null)
         {

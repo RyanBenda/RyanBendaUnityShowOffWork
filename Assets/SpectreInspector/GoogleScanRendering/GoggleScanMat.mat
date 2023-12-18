@@ -48,11 +48,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ColourIntensity: 20
     - _GlitchStrength: 5
     - _Intensity_Transparency: 0.15
     - _LineAmount: 5
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0, g: 1, b: 0.0627451, a: 0}
+    - _Color: {r: 0, g: 1, b: 0.062745094, a: 1}
+    - _Colour: {r: 0, g: 1, b: 0.0627451, a: 0}
   m_BuildTextureStacks: []

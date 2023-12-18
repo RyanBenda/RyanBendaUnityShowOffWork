@@ -98,7 +98,6 @@ public class TripShotTool : PlaceableTool
     {
         NewInputSetup();
     }
-
     private void Awake()
     {
         if (_PlayerControl == null)
@@ -536,7 +535,6 @@ public class TripShotTool : PlaceableTool
             _LogoCanvas.gameObject.SetActive(false);
         }
     }
-
 
     private void OnTriggerExit(Collider other)
     {
