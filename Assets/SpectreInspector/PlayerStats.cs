@@ -161,7 +161,7 @@ public class PlayerStats : MonoBehaviour
 
                 for (int i = 0; i < goggle.pooledPaths.Count; i++)
                 {
-                    goggle.pooledPaths[i].gameObject.SetActive(false);//////////////////////////////////////////////////////////////////////////////////////
+                    goggle.pooledPaths[i].gameObject.SetActive(false);
                 }
 
                 goggle.UnequipGoggles();

@@ -49,19 +49,7 @@ public class CameraToolUI : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.M))
-        //{
 
-        //    if (_TopShutter == null && _BottomShutter == null)
-        //    {
-        //        Debug.Log("NO SHUTTER");
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("SHUTTER FOUND");
-        //        ActivateShutter();
-        //    }
-        //}
     }
     public void UpdateSlider()
     {
@@ -73,19 +61,7 @@ public class CameraToolUI : MonoBehaviour
     public void ActivateShutter()
     {
         _Animator.SetTrigger("Activate");
-        //_Animator.ResetTrigger("Activate");
 
-        //Debug.Log("BEING CALLED!");
-        //Sequence sequenceTop = DOTween.Sequence();
-        //sequenceTop.Append(_TopShutter.GetComponent<RectTransform>().DOAnchorPosY(10f, 1).SetUpdate(true));
-        //sequenceTop.Append(_TopShutter.GetComponent<RectTransform>().DOAnchorPosY(-10f, 1).SetUpdate(true));
-        ////sequenceTop.Append(_TopShutter.GetComponent<RectTransform>().DOAnchorPosY(+10, 1));
-        //sequenceTop.Play();
-
-        //Sequence sequenceBottom = DOTween.Sequence();
-        //sequenceBottom.Append(_BottomShutter.GetComponent<RectTransform>().DOAnchorPosY(-10F, 1).SetUpdate(true));
-        //sequenceBottom.Append(_BottomShutter.GetComponent<RectTransform>().DOAnchorPosY(10f, 1).SetUpdate(true));
-        //sequenceBottom.Play();
     }
 
     public void CantTakePhoto()

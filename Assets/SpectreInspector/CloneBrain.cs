@@ -42,8 +42,8 @@ public class CloneBrain : MonoBehaviour
             removeClone = false;
             _HasBeenCaught = true;
             _BeingSetInactive = false;
-            //GetComponent<BehaviourTreeRunner>().enabled = true;
-            //GetComponent<NavMeshAgent>().enabled = true;
+            GetComponent<BehaviourTreeRunner>().enabled = true;
+            GetComponent<NavMeshAgent>().enabled = true;
             _RemoveClone = false;
             _Brain.isDizzy = false;
             this.gameObject.SetActive(false);
@@ -71,7 +71,7 @@ public class CloneBrain : MonoBehaviour
         }
         else
         {
-            //GetComponent<BehaviourTreeRunner>().enabled = true;
+            GetComponent<BehaviourTreeRunner>().enabled = true;
             GetComponent<NavMeshAgent>().enabled = true;
             _RemoveClone = false;
             _Brain.isDizzy = false;

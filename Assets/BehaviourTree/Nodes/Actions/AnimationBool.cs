@@ -33,7 +33,6 @@ public class AnimationBool : ActionNode
     {
 
         animator.SetBool(_BoolName, _Active);
-        //animator.ResetTrigger(_TriggerName);
 
         return State.Success;
     }

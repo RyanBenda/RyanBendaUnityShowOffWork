@@ -33,18 +33,12 @@ public class TrapHandsAnimationsHandler : MonoBehaviour
         _HandHeldTrap.GetComponent<HandHeldTrap>()._ToolAnimator.SetBool("Unequiping", false);
         ToolManager.instance._CurrentTool = null;
 
-        //_HandHeldTrap.GetComponent<HandHeldTrap>()._ToolSlot.TweenDown();
-
         _HandHeldTrap.SetActive(false);
         if (_HandHeldTrap.GetComponent<HandHeldTrap>()._SwappingTool != null)
         {
             _HandHeldTrap.GetComponent<HandHeldTrap>()._SwappingTool.gameObject.SetActive(true);
             _HandHeldTrap.GetComponent<HandHeldTrap>()._SwappingTool = null;
         }
-        else
-        {
 
-            //_HandHeldTrap.GetComponent<HandHeldTrap>()._ToolSlot.PopArrow();
-        }
     }
 }

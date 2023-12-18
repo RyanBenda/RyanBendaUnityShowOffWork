@@ -25,7 +25,6 @@ public class WeaponWheelHover : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public GameObject _buttonImage;
     public bool _isSpinning = false;
 
-    //Canvas _sorting;
     public bool _IsPhotos;
     public Transform _MiddlePos;
     public Image _BigImage;
@@ -47,14 +46,7 @@ public class WeaponWheelHover : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
             if (_PhotosPage == null)
                 _PhotosPage = FindObjectOfType<CameraPhotosPage>(true);
-            //_Startpos = this.transform.;
-            // this.transform.parent = this.transform.parent.parent.parent;
-            //this.transform.position = _Startpos;
-            //_Startpos = this.transform.localPosition;
-
-
         }
-            //_sorting = GetComponent<Canvas>();
     }
 
     public void ClickedPhoto()
@@ -82,10 +74,6 @@ public class WeaponWheelHover : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         rectTransform.localScale = _StartScale;
     }
-
-    
-
-    // Update is called once per frame
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -127,16 +115,12 @@ public class WeaponWheelHover : MonoBehaviour, IPointerEnterHandler, IPointerExi
         _SoundEmitter.clip = audioClip;
         _SoundEmitter.Play();*/
 
-        //if (_IsPhotos)
-            //_sorting.sortingLayerID = 2;
     }
 
     public void TweenIn()
     {
         rectTransform.DOScale(_StartScale, 0.25f).SetUpdate(true);
 
-        //if (_IsPhotos)
-            //_sorting.sortingLayerID = 1;
     }
 
     // EXTRA POLISH!!!

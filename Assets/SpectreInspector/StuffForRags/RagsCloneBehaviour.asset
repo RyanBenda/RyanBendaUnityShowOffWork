@@ -315,6 +315,24 @@ MonoBehaviour:
   guid: 4b0d92a2df17f664b9505b80a8ca5492
   position: {x: -333.05624, y: 61.999992}
   child: {fileID: -909971369061462831}
+--- !u!114 &-163627678797654097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aacff2f507a19f4caae2dfa4fc3d407, type: 3}
+  m_Name: IsDizzy
+  m_EditorClassIdentifier: 
+  folderName: 
+  attachedGameObject: {fileID: 0}
+  state: 0
+  started: 0
+  guid: 9466caabfa688f5429b72c40bb445fd3
+  position: {x: 0, y: 0}
 --- !u!114 &-71906494712755732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,7 +400,7 @@ MonoBehaviour:
   - {fileID: 2304305150614815252}
   - {fileID: 4745362211739008112}
   - {fileID: 7808882646746004225}
-  - {fileID: 2889572748330095318}
+  - {fileID: -163627678797654097}
 --- !u!114 &432655262771959125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,27 +539,6 @@ MonoBehaviour:
   started: 0
   guid: bc334d1593694e541bfe9c63c8b33035
   position: {x: -1541.9999, y: 465.00006}
---- !u!114 &2889572748330095318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4813ed6e3a8a780458386a0924185e8c, type: 3}
-  m_Name: AddTrackerChild
-  m_EditorClassIdentifier: 
-  folderName: 
-  attachedGameObject: {fileID: 0}
-  state: 0
-  started: 0
-  guid: c307268806ad87b40b34951f1c924e02
-  position: {x: 0, y: 0}
-  tracker: {fileID: 0}
-  holdPos: {x: 0, y: 0, z: 1}
-  radius: 2
 --- !u!114 &3033790244933226345
 MonoBehaviour:
   m_ObjectHideFlags: 0

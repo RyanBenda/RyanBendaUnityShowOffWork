@@ -45,8 +45,6 @@ public class CameraTool : HandheldTool
     public GameObject _RaycastShoot;
     public PlayerInput _PlayerInput;
 
-    public List<GameObject> _OtherTools = new List<GameObject>();
-
     public HotBarPos _ToolSlot;
 
     public Image _FadeToBlack;
@@ -94,8 +92,6 @@ public class CameraTool : HandheldTool
 
     private void Awake()
     {
-        //screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-        //screenCapture2 = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
 
         for (int i = 0; i < screenCaptures.Length; i++)
         {
@@ -110,18 +106,10 @@ public class CameraTool : HandheldTool
         if (_PhotoPage == null)
             _PhotoPage = FindObjectOfType<CameraPhotosPage>(true);
 
-        //if (_CompendiumButtons == null)
-            //_CompendiumButtons = FindObjectsOfType<CompendiumButtonComponent>(true);
-
         CameraInstance = this;
 
         _PlayerInput = FindObjectOfType<PlayerInput>();
 
-        /*_PlayerInput.actions["PrimaryAction"].performed += DoSnap;
-        _PlayerInput.actions["PrimaryAction"].Enable();
-
-        _PlayerInput.actions["SecondaryAction"].performed += DoUnequip;
-        _PlayerInput.actions["SecondaryAction"].Enable();*/
 
         this.gameObject.SetActive(false);   
     }
@@ -130,18 +118,12 @@ public class CameraTool : HandheldTool
     {
         _Cam = Camera.main;
         _fov = _Cam.fieldOfView;
-        //playerInput = FindObjectOfType<PlayerInput>();
-
-
-        
     }
 
     private void OnEnable()
     {
         if (_PlayerControl == null)
             _PlayerControl = Camera.main.transform.parent.GetComponent<PhysicsPlayerController>();
-
-        //playerInput = FindObjectOfType<PlayerInput>();
 
         bool _delayToolSwap = false;
         if (ToolManager.instance._CurrentTool != null && ToolManager.instance._CurrentTool != this)
@@ -168,17 +150,16 @@ public class CameraTool : HandheldTool
 
             base.Equip();
 
-            for (int i = 0; i < _OtherTools.Count; i++)
+            foreach (Tool tool in ToolManager.instance._HandToolsList)
             {
-                _OtherTools[i].gameObject.SetActive(false);
+                if (tool != null & tool != this)
+                    tool.gameObject.SetActive(false);
             }
 
             _ToolSlot.TweenUp();
             _ToolSlot.MoveArrow(3);
 
             _ToolAnimator.SetBool("Equipping", true);
-
-
 
             _PlayerInput.actions["PrimaryAction"].performed += DoSnap;
             _PlayerInput.actions["PrimaryAction"].Enable();
@@ -200,17 +181,6 @@ public class CameraTool : HandheldTool
 
         _PlayerInput.actions["Unequip"].performed += DoUnequip;
         _PlayerInput.actions["Unequip"].Enable();
-
-    }
-
-    private void OnDisable()
-    {
-        /*playerInput.actions["PrimaryAction"].performed -= DoSnap;
-        playerInput.actions["PrimaryAction"].Disable();
-
-
-        playerInput.actions["Unequip"].performed -= DoUnequip;
-        playerInput.actions["Unequip"].Disable();*/
     }
 
     public void BeginFadeToBlack()
@@ -225,18 +195,6 @@ public class CameraTool : HandheldTool
     // Update is called once per frame
     void Update()
     {
-        //if (timer < _blipIntervals)
-        //{
-        //    timer += Time.deltaTime;
-
-        //    if (timer >= _blipIntervals)
-        //    {
-        //        timer = 0;
-        //        SetCreaturePos();
-
-        //    }
-        //}
-
         if (!_GogglesOn)
         {
             _CameraToolUIScript._Inuse = true;
@@ -360,26 +318,11 @@ public class CameraTool : HandheldTool
 
                 _CameraToolUI.GetComponent<CameraToolUI>().UpdateSlider();
             }
-
-            /*if (Input.GetMouseButtonDown(0))
-            {
-                
-            }*/
         }
-
-        //if (Input.GetMouseButtonDown(1))
-        //{
-        //    Unequip();
-        //}
-        //else if (Input.GetMouseButtonDown(0))
-        //{
-        //    Snap();
-        //}
     }
 
     IEnumerator CapturePhoto()
     {
-        
 
         for (int i = 0; i < _UiToHide.Length; i++)
         {
@@ -409,174 +352,9 @@ public class CameraTool : HandheldTool
 
     public void TakePhoto()
     {
-        //if (!viewingPhoto)
         StartCoroutine(CapturePhoto());
-        //else
-            //RemovePhoto();
     }
 
-    void CheckForGhost(Texture2D text)
-    {
-        planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
-        
-
-        List<CreatureBrain> ghosts = new List<CreatureBrain>();
-        
-        foreach (CreatureBrain creatureBrain in _Creatures)
-        {
-            ghosts.Add(creatureBrain);
-        }
-
-        for (int i = 0; i < ghosts.Count; i++)
-        {
-            if (!ghosts[i].IsInFrustumPlanes())
-            {
-                ghosts.RemoveAt(i);
-                i--;
-            }
-        }
-
-        bool _ContainsGhosts = false;
-
-        for (int i = 0; i < ghosts.Count; i++)
-        {
-            Debug.Log("ANGLE CHECK: " + Vector3.Angle(Camera.main.transform.forward, ghosts[i].transform.position - Camera.main.transform.position) + " FOV: " + Camera.main.fieldOfView);
-
-            if (Vector3.Angle(Camera.main.transform.forward, ghosts[i].transform.position - Camera.main.transform.position) <= Camera.main.fieldOfView * 0.65f)
-            {
-                Debug.Log("ANGLE Passed");
-                if (PhotoRaycasts(ghosts[i].transform.position - Camera.main.transform.position))
-                {
-                    _ContainsGhosts = true;
-                    Debug.Log("ANGLE GOTPHOTO");
-
-                    CreatureBrain creatureBrain = ghosts[i];
-
-                    //creatureBrain.CheckPhotoQuest();
-
-                    /*for (int j = 0; j < _CompendiumButtons.Length; j++)
-                    {
-                        if (_CompendiumButtons[j]._Creature == ghosts[i]._CreatureIdentity)
-                        {
-                            Texture2D copyTexture = new Texture2D(text.width, text.height);
-                            copyTexture.SetPixels(text.GetPixels());
-                            copyTexture.Apply();
-
-                            Sprite photoSprite = Sprite.Create(copyTexture, new Rect(0.0f, 0.0f, copyTexture.width, copyTexture.height), new Vector2(0.5f, 0.5f), 100.0f);
-
-                            _CompendiumButtons[j]._LastPhotoOfGhost = copyTexture;
-                            _CompendiumButtons[j]._LastPhotoOfGhostSprite = photoSprite;
-                            //_CompendiumButtons[j]._lastPic.sprite = photoSprite;
-                        }
-                    }*/
-                }
-                else
-                {
-                    ghosts.RemoveAt(i);
-                    i--;
-                }
-            }
-            else
-            {
-                ghosts.RemoveAt(i);
-                i--;
-            }
-            /*RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, ghosts[i].transform.position - Camera.main.transform.position, out hit, 100))
-            {
-                if (hit.collider.gameObject.GetComponent<CreatureBrain>())
-                {
-                    CreatureBrain creatureBrain = hit.collider.gameObject.GetComponent<CreatureBrain>();
-
-                    creatureBrain.CheckPhotoQuest();
-
-                    for (int j = 0; j < _CompendiumButtons.Length; j++)
-                    {
-                        if (_CompendiumButtons[j]._Creature == ghosts[i]._CreatureIdentity)
-                        {
-                            Texture2D copyTexture = new Texture2D(text.width, text.height);
-                            copyTexture.SetPixels(text.GetPixels());
-                            copyTexture.Apply();
-
-                            Sprite photoSprite = Sprite.Create(copyTexture, new Rect(0.0f, 0.0f, copyTexture.width, copyTexture.height), new Vector2(0.5f, 0.5f), 100.0f);
-
-                            _CompendiumButtons[j]._LastPhotoOfGhost = copyTexture;
-                            _CompendiumButtons[j]._LastPhotoOfGhostSprite = photoSprite;
-                        }
-                    }
-
-                }
-                else
-                {
-                    ghosts.RemoveAt(i);
-                    i--;
-                }
-
-            }
-            else
-            {
-                ghosts.RemoveAt(i);
-                i--;
-            } */
-        }
-
-
-        
-
-
-    }
-
-    public bool PhotoRaycasts(Vector3 dir)
-    {
-        if (GhostTarget(Vector3.zero, dir))
-        {
-            return true;
-        }
-        else
-        {
-
-            for (int i = 1; i < 5; i++)
-            {
-                if (GhostTarget(new Vector3(i / 5, 0, 0), dir)) { return true; }
-                if (GhostTarget(new Vector3(i / 5 * -1, 0, 0), dir)) { return true; }
-                if (GhostTarget(new Vector3(0, i / 5, 0), dir)) { return true; }
-                if (GhostTarget(new Vector3(0, i / 5 * -1, 0), dir)) { return true; }
-
-                // Inbetweens!
-                if (GhostTarget(new Vector3(i / 5, i / 5, 0), dir)) { return true; }
-                if (GhostTarget(new Vector3(i / 5 * -1, i / 5 * -1, 0), dir)) { return true; }
-                if (GhostTarget(new Vector3(i / 5, i / 5 * -1, 0), dir)) { return true; }
-                if (GhostTarget(new Vector3(i / 5, i / 5 * -1, 0), dir)) { return true; }
-            }
-
-            return false;
-        }
-    }
-
-    public bool GhostTarget(Vector3 pos, Vector3 dir)
-    {
-        RaycastHit hit;
-        _RaycastShoot.transform.localPosition = pos;
-        _RaycastShoot.transform.rotation = Camera.main.transform.rotation;
-        // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(_RaycastShoot.transform.position, dir, out hit, Mathf.Infinity, _GhostCheckLayermask, QueryTriggerInteraction.Ignore))
-        {
-            Debug.DrawRay(_RaycastShoot.transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            if (hit.collider.gameObject.GetComponent<CreatureBrain>())
-            {
-                //hit.collider.gameObject.GetComponent<CreatureBrain>().CameraStun();
-
-
-                return true;
-            }
-            
-
-        }
-
-
-        return false;
-
-    }
 
     void ShowPhoto()
     {
@@ -586,10 +364,8 @@ public class CameraTool : HandheldTool
         _source.Play();
 
         _CameraToolUI.GetComponent<CameraToolUI>().ActivateShutter();
-        ShootRaycasts();
 
         Sprite photoSprite = Sprite.Create(screenCaptures[screenCapturesIndex], new Rect(0.0f, 0.0f, screenCaptures[screenCapturesIndex].width, screenCaptures[screenCapturesIndex].height), new Vector2(0.5f, 0.5f), 100.0f);
-        //CheckForGhost(screenCaptures[screenCapturesIndex]);
 
         screenCapturesIndex++;
 
@@ -621,19 +397,7 @@ public class CameraTool : HandheldTool
         
     }
 
-    public override void Equip()
-    {
-        Tool currentTool = ToolManager.instance._CurrentTool;
 
-        if (currentTool == null) // NEED TO CHANGE TO HANDLE MULTIPLE TOOLS
-        {
-
-        }
-        else if (currentTool.GetComponent<CameraTool>() == null)
-        {
-
-        }
-    }
 
     void DoSnap(InputAction.CallbackContext obj)
     {
@@ -644,9 +408,6 @@ public class CameraTool : HandheldTool
                 _CameraToolUIScript._Inuse = true;
                 TakePhoto();
             }
-            
-
-            
         }
     }
 
@@ -724,59 +485,5 @@ public class CameraTool : HandheldTool
     {
         base.DetermineToolSwap();
     }
-
-
-    public void ShootRaycasts()
-    {
-        if (HitTarget(Vector3.zero))
-        {
-            
-        }
-        else
-        {
-
-            for (int i = 1; i < 20; i++)
-            {
-                if(HitTarget(new Vector3(i / 5, 0, 0))) { break; }
-                if (HitTarget(new Vector3(i / 5 * -1, 0, 0))) { break; }
-                if (HitTarget(new Vector3(0, i / 5, 0))) { break; }
-                if (HitTarget(new Vector3(0, i / 5 * -1, 0))) { break; }
-
-                // Inbetweens!
-                if (HitTarget(new Vector3(i / 5, i / 5, 0 ))) { break; }
-                if (HitTarget(new Vector3(i / 5 * -1, i / 5 * -1, 0))) { break; }
-                if (HitTarget(new Vector3(i / 5, i / 5 * -1, 0))) { break; }
-                if (HitTarget(new Vector3(i / 5, i / 5 * -1, 0))) { break; }
-            }
-        }
-    }
-
-    public bool HitTarget(Vector3 pos)
-    {
-        RaycastHit hit;
-        _RaycastShoot.transform.localPosition = pos;
-        _RaycastShoot.transform.rotation = Camera.main.transform.rotation;
-        // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(_RaycastShoot.transform.position, Camera.main.gameObject.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, _HitTargetLayermask))
-        {
-            Debug.DrawRay(_RaycastShoot.transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            if (hit.collider.gameObject.GetComponent<CreatureBrain>())
-            {
-                hit.collider.gameObject.GetComponent<CreatureBrain>().CameraStun();
-                return true;
-            }
-            
-
-        }
-
-
-        return false;
-
-    }
-
-
-
-
-
 
 }

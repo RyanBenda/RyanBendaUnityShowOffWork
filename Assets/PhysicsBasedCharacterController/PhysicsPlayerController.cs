@@ -55,7 +55,7 @@ public class PhysicsPlayerController : MonoBehaviour
                 m_prevFrameJumpCheck = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && m_CanJump)
+            if (_PlayerInput.actions["Jump"].triggered && m_CanJump)
             {
                 if (m_Grounded || m_jumpTally < m_MaxJumps)
                 {

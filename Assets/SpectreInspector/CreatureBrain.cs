@@ -18,9 +18,6 @@ public class CreatureBrain : MonoBehaviour
     public bool _CanBeStunnedWithCamera = false;
     public bool _CanBeTrappedCurrently = true;
 
-    //public Trackable[] _Likes;
-    //public Trackable[] _Dislikes;
-
     float timer;
 
     public CreatureScriptableObject _CreatureIdentity;
@@ -38,10 +35,7 @@ public class CreatureBrain : MonoBehaviour
     public bool _IsFrightened = false;
     public bool _AutoCapture = false;
 
-    //public BaseObjective PhotoQuest;
-
     
-
     [HideInInspector]
     public bool _InsuranceThrowCheck = false;
     bool _Rotate;
@@ -54,11 +48,6 @@ public class CreatureBrain : MonoBehaviour
     bool _WaitTillNewHit = false;
     float _WaitASec = 0;
     
-
-    private void OnDestroy()
-    {
-        //CameraTool.CameraInstance._Creatures.Remove(this);
-    }
 
     public bool IsInFrustumPlanes()
     {
@@ -77,9 +66,7 @@ public class CreatureBrain : MonoBehaviour
         if(_Player == null)
         {
             _Player = GameObject.FindGameObjectWithTag("Player");
-
         }
-        //CameraTool.CameraInstance._Creatures.Add(this);
     }
 
 
@@ -132,7 +119,7 @@ public class CreatureBrain : MonoBehaviour
         {
             CurrentHitTotal = 0;
             isDizzy = true;
-            //_CreatureAnimator.SetBool("Dizzy", true);
+
             if (_HasActiveClones)
             {
                 CreatureObjectPooling _pooledCrea = this.GetComponent<CreatureObjectPooling>();
@@ -141,10 +128,8 @@ public class CreatureBrain : MonoBehaviour
                 {
                     for (int k = 0; k < _pooledCrea.pooledCreatures.Count; k++)
                     {
-                        //_pooledCrea.pooledCreatures[k].GetComponent<CloneBrain>()._HasBeenCaught = true;
-                        //_pooledCrea.pooledCreatures[k].gameObject.SetActive(false);
                         _pooledCrea.pooledCreatures[k].GetComponent<NavMeshAgent>().enabled = false;
-                        //_pooledCrea.pooledCreatures[k].GetComponent<BehaviourTreeRunner>().enabled = false;
+                        _pooledCrea.pooledCreatures[k].GetComponent<BehaviourTreeRunner>().enabled = false;
                         _pooledCrea.pooledCreatures[k].GetComponent<CloneBrain>().RemoveClone();
 
                     }
@@ -167,44 +152,7 @@ public class CreatureBrain : MonoBehaviour
         }
 
 
-        //CheckPhotoQuest();
-
     }
-
-    
-
-    public void ThrowCheck()
-    {
-        _PrevDir = transform.forward;
-        _Dir = -transform.forward;
-        RaycastHit hit;
-
-        for (int i = 0; i < 8; i++)
-        {
-            Vector3 newDir = Quaternion.AngleAxis(45 * i, transform.up) * transform.forward;
-
-            Debug.DrawRay(this.transform.position, _Dir, Color.red);
-
-            if (!Physics.Raycast(this.transform.position, newDir, out hit, 2, _ThrowDirection))
-            {
-                _Dir = newDir;
-                break;
-            }
-            else
-            {
-                Debug.Log("HitNAME:" + hit.transform.name);
-            }
-        }
-
-        _InsuranceThrowCheck = true;
-        _T = 0;
-    }
-
-
-    // So the behaviour tree can call for a mission objective to complete depending on the action of a ghost.
-    // For example: spooking peebo can complete an objective to guide the player to the answer of a puzzle. - Lee
-    
-
 
     private void OnCollisionEnter(Collision collision)
     {

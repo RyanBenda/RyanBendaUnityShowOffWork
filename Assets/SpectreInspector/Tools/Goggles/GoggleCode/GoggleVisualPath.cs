@@ -30,42 +30,5 @@ public class GoggleVisualPath : MonoBehaviour
             _TrailRenderer = GetComponentInChildren<TrailRenderer>();
 
         _TrailRenderer.Clear();
-
-        /*if (_GhostToGoTo == Ghosts.Rags)
-        {
-            if (_BearRooms == null)
-                _BearRooms = FindObjectsOfType<BearRoom>();
-
-            for (int i = 0; i < _BearRooms.Length; i++)
-            {
-                if (_BearRooms[i]._RoomInUse)
-                {
-                    _Agent.destination = _BearRooms[i].transform.position;
-                    return;
-                }
-            }
-        }
-        else if (_GhostToGoTo == Ghosts.Larry)
-        {
-            if (_InsuranceRooms == null)
-                _InsuranceRooms = FindObjectsOfType<InsuranceRoom>();
-
-            for (int i = 0; i < _InsuranceRooms.Length; i++)
-            {
-                if (_InsuranceRooms[i]._RoomInUse)
-                {
-                    _Agent.destination = _InsuranceRooms[i].transform.position;
-                    return;
-                }
-            }
-        }*/
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

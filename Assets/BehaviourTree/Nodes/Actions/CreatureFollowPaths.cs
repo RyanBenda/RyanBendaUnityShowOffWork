@@ -85,10 +85,7 @@ public class CreatureFollowPaths : ActionNode
 
     protected override State OnUpdate()
     {
-        //if (attachedGameObject.transform.position.x == patrolPoints[currentPatrolPoint].x && attachedGameObject.transform.position.z == patrolPoints[currentPatrolPoint].z)
-        //{
-        //    return State.Success;
-        //}
+
 
 
         agent.destination = patrolPoints[currentPatrolPoint].transform.position;

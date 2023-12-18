@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class GoggleTool : HandheldTool
 {
-
     [Header("First Time Lines:")]
     
     private bool DoneDialogue = false;
@@ -29,7 +28,6 @@ public class GoggleTool : HandheldTool
     bool _RemovingGoggles;
 
     //public FootprintObjectPools _FootPrintPoolObject;
-
     //public List<SpriteRenderer> _FootPrints= new List<SpriteRenderer>();
 
     public Animator _ToolAnimator;
@@ -38,7 +36,6 @@ public class GoggleTool : HandheldTool
     public List<GameObject> _OtherTools = new List<GameObject>();
 
     bool _PreventSwap;
-    //bool _RemovingGogglesBool;
     public HotBarPos _ToolSlot;
 
 
@@ -146,8 +143,6 @@ public class GoggleTool : HandheldTool
                     tool.gameObject.SetActive(false);
             }
 
-            //BeginFadeToBlack();
-
             _ToolAnimator.SetBool("Equipping", true);
         }
         else
@@ -165,7 +160,6 @@ public class GoggleTool : HandheldTool
         _FadeToBlack.gameObject.SetActive(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!_RemovingGoggles)
@@ -193,16 +187,6 @@ public class GoggleTool : HandheldTool
                     {
                         _GogglesObjects[i].SetActive(false);
                     }
-                    
-
-
-
-                    // UNDO THIS WHEN WE HAVE A CHANCE PLEASE - LEE
-
-                    //for (int i = 0; i < _FootPrintPoolObject.pooledObjects.Count; i++)
-                    //{
-                    //    _FootPrintPoolObject.pooledObjects[i].GetComponentInChildren<SpriteRenderer>().enabled = true;
-                    //}
                 }
             }
             else if (_FadingToClear)
@@ -224,8 +208,6 @@ public class GoggleTool : HandheldTool
                         hitpos = hit.point;
                         hitpos.y += 0.4f;
                     }
-
-
 
                     for (int i = 0; i < _Rooms.Length; i++)
                     {
@@ -270,15 +252,9 @@ public class GoggleTool : HandheldTool
 
                     for (int i = 0; i < pooledPaths.Count; i++)
                     {
-                        pooledPaths[i].gameObject.SetActive(false);//////////////////////////////////////////////////////////////////////////////////////
+                        pooledPaths[i].gameObject.SetActive(false);
                     }
 
-                    // interesting hmmmmmmmm WE SHOULD FIX THIS - Lee
-
-                    //for (int i = 0; i < _FootPrintPoolObject.pooledObjects.Count; i++)
-                    //{
-                    //    _FootPrintPoolObject.pooledObjects[i].GetComponentInChildren<SpriteRenderer>().enabled = false;
-                    //}
                 }
             }
             else if (_FadingToClear)
@@ -296,11 +272,6 @@ public class GoggleTool : HandheldTool
                 }
             }
         }
-
-        /*if (Input.GetMouseButtonDown(1))
-        {
-            RemoveGoggles();
-        }*/
     }
 
     public void RemoveGoggles()
@@ -338,8 +309,6 @@ public class GoggleTool : HandheldTool
         }
         else
         {
-
-
             _ToolSlot._Arrow.gameObject.SetActive(false);
         }
 

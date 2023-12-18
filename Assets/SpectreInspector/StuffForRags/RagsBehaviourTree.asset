@@ -285,6 +285,26 @@ MonoBehaviour:
   started: 0
   guid: 6da106b7fed6cf94a9d1bcbcb0ad0b35
   position: {x: 1252.9999, y: 568.15015}
+--- !u!114 &-5121145468811442275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a797d4c962b2214fb35d1d50c3c1804, type: 3}
+  m_Name: AnimationBool
+  m_EditorClassIdentifier: 
+  folderName: 
+  attachedGameObject: {fileID: 0}
+  state: 0
+  started: 0
+  guid: 09535413562921f4cbb88d0ee8774a4c
+  position: {x: 0, y: 0}
+  _BoolName: 
+  _Active: 0
 --- !u!114 &-5087487937332733831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,30 +402,6 @@ MonoBehaviour:
   started: 0
   guid: 6b04810dafbb2e246b5368b133ce6591
   position: {x: 1194.6003, y: 779.00006}
---- !u!114 &-4266192044000975423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f5cbdb94ce52ff47b8a9de32bfb40ed, type: 3}
-  m_Name: ApplyForceToChild
-  m_EditorClassIdentifier: 
-  folderName: 
-  attachedGameObject: {fileID: 0}
-  state: 0
-  started: 0
-  guid: c8a7c2dfbcec2c2438fdd298e138635a
-  position: {x: 0, y: 0}
-  tracker: {fileID: 0}
-  randomiseDirection: 0
-  randMin: -1.5
-  randMax: 1.5
-  force: 15
-  upForce: 0
 --- !u!114 &-3932090003379362098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -969,7 +965,7 @@ MonoBehaviour:
   - {fileID: -3932090003379362098}
   - {fileID: -7363219120824604083}
   - {fileID: 5261192432223258478}
-  - {fileID: -4266192044000975423}
+  - {fileID: -5121145468811442275}
 --- !u!114 &79324518720983479
 MonoBehaviour:
   m_ObjectHideFlags: 0
