@@ -26,6 +26,7 @@ public class CreateCreatureClones : ActionNode
                 _Pool.pooledCreatures[i].transform.rotation = attachedGameObject.transform.rotation;
                 _Pool.pooledCreatures[i].transform.localScale = attachedGameObject.transform.localScale;
                 _Pool.pooledCreatures[i].gameObject.GetComponent<CloneBrain>()._Agent.enabled = true;
+                _Pool.pooledCreatures[i].GetComponent<BehaviourTreeRunner>().enabled = true;
                 _Creature._HasActiveClones = true;
             }
         }

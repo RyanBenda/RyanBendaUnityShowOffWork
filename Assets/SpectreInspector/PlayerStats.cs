@@ -76,10 +76,10 @@ public class PlayerStats : MonoBehaviour
         {
             _FadingToBlack = true;
             _FadeToBlack.gameObject.SetActive(true);
-            footVol = _FootstepSource.volume;
-            _FootstepSource.volume = 0;
-            _PlayerAudioSource.clip = _DeathSound;
-            _PlayerAudioSource.Play();
+            //footVol = _FootstepSource.volume;
+            //_FootstepSource.volume = 0;
+            //_PlayerAudioSource.clip = _DeathSound;
+            //_PlayerAudioSource.Play();
             player._PlayerState = PlayerStates.DeathState;
 
             ResetTools();
@@ -187,9 +187,9 @@ public class PlayerStats : MonoBehaviour
             if (HealthState != 0)
                 playerUI.UpdatePlayer(MaxHealth - HealthState);
 
-            _PlayerAudioSource.clip = _HurtSounds[Random.Range(0, _HurtSounds.Length)];
+            /*_PlayerAudioSource.clip = _HurtSounds[Random.Range(0, _HurtSounds.Length)];
             _PlayerAudioSource.pitch = Random.Range(0.95f, 1.0f);
-            _PlayerAudioSource.Play();
+            _PlayerAudioSource.Play();*/
 
             
         }

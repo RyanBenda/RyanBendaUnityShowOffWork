@@ -6,7 +6,7 @@ public class ThrowObjectComponent : MonoBehaviour
 {
     public GameObject[] _ThrowableItems;
     public bool _AttackPlayer;
-    [HideInInspector]
+    //[HideInInspector]
     //public bool _IgnoreAttack;
     //[HideInInspector]
     //public PlayerControl _PlayerControl;

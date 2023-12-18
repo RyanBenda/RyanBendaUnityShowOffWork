@@ -28,8 +28,9 @@ public struct CreatureEmotionsStruct
     {
         CreatureEmotionComponent CEC = creature.GetComponent<CreatureEmotionComponent>();
 
+       
         CEC._EmotionPrefab.SetActive(true);
-        //CEC._EmotionPrefab.GetComponent<ClearEmotionCanvas>()._Timer = 0;
+        CEC._EmotionPrefab.GetComponent<ClearEmotionCanvas>()._Timer = 0;
         CEC._EmotionImage.sprite = _EmotionSprite;
         creature._CurEmotion = _Emotion;
 

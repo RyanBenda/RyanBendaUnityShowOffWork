@@ -315,6 +315,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4354298509528546990, guid: 95a4b308e962cf6439d66762070f8f56,
+        type: 3}
+      propertyPath: _CreatureImage
+      value: 
+      objectReference: {fileID: 1023444527}
+    - target: {fileID: 4354298509528546990, guid: 95a4b308e962cf6439d66762070f8f56,
+        type: 3}
+      propertyPath: _CreatureNamePlate
+      value: 
+      objectReference: {fileID: 150939107}
+    - target: {fileID: 4354298509528546990, guid: 95a4b308e962cf6439d66762070f8f56,
+        type: 3}
+      propertyPath: _CreatureBannerTimer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7909903727028179975, guid: 95a4b308e962cf6439d66762070f8f56,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -459,6 +474,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &150939107 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6359467825943535254, guid: 95a4b308e962cf6439d66762070f8f56,
+    type: 3}
+  m_PrefabInstance: {fileID: 76121538}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &208416769
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,6 +1144,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1023444527 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4492341896717778784, guid: 95a4b308e962cf6439d66762070f8f56,
+    type: 3}
+  m_PrefabInstance: {fileID: 76121538}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1067781556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,6 +1650,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4226845389328403841, guid: a0abb47d06d2b8c4aa5cb93b7a224e70,
+        type: 3}
+      propertyPath: _CurRoom
+      value: 
+      objectReference: {fileID: 1067781558}
     - target: {fileID: 4303475370951041219, guid: a0abb47d06d2b8c4aa5cb93b7a224e70,
         type: 3}
       propertyPath: m_Name

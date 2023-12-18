@@ -77,6 +77,8 @@ public class TrapTool : PlaceableTool
     bool _CanCatchGhosts;
     bool CanCatch;
 
+    [SerializeField] private CaughtPrefabComponent CaughtCreatureBanner;
+
     private void OnEnable()
     {
 
@@ -109,7 +111,10 @@ public class TrapTool : PlaceableTool
         if (playerControl == null)
             playerControl = FindObjectOfType<PhysicsPlayerController>();
 
-        
+        CaughtCreatureBanner = FindObjectOfType<CaughtPrefabComponent>(true);
+
+
+
     }
 
 
@@ -240,7 +245,16 @@ public class TrapTool : PlaceableTool
 
             }*/
 
-            //_CreaturesCaught[i]._CurRoom._RoomInUse = false;
+
+            CaughtCreatureBanner.SetCreature(_CreaturesCaught[i]._CreatureIdentity._Sprite, _CreaturesCaught[i]._CreatureIdentity._NamePlate);
+
+            CaughtCreatureBanner._CreatureImage.sprite = _CreaturesCaught[i]._CreatureIdentity._Sprite; /////////////////////////////////
+            //CaughtCreatureBanner._CreatureName.text = _CreaturesCaught[i]._CreatureIdentity._Name;
+            CaughtCreatureBanner._CreatureBannerActive = true;
+
+            CaughtCreatureBanner.gameObject.SetActive(true);
+
+            _CreaturesCaught[i]._CurRoom._RoomInUse = false;
 
             GameObject crea = _CreaturesCaught[i].gameObject;
             _CreaturesCaught.Remove(_CreaturesCaught[i]);
@@ -323,7 +337,7 @@ public class TrapTool : PlaceableTool
                     //_pooledCrea.pooledCreatures[k].GetComponent<CloneBrain>()._HasBeenCaught = true;
                     //_pooledCrea.pooledCreatures[k].gameObject.SetActive(false);
                     _pooledCrea.pooledCreatures[k].GetComponent<NavMeshAgent>().enabled = false;
-                    //_pooledCrea.pooledCreatures[k].GetComponent<BehaviourTreeRunner>().enabled = false;
+                    _pooledCrea.pooledCreatures[k].GetComponent<BehaviourTreeRunner>().enabled = false;
                     _pooledCrea.pooledCreatures[k].GetComponent<CloneBrain>().RemoveClone();
 
                 }
@@ -492,7 +506,7 @@ public class TrapTool : PlaceableTool
 
                     _CreaturesCaught[i].gameObject.GetComponent<Collider>().enabled = true;
                     _CreaturesCaught[i].gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                    //_CreaturesCaught[i].GetComponent<BehaviourTreeRunner>().enabled = true;
+                    _CreaturesCaught[i].GetComponent<BehaviourTreeRunner>().enabled = true;
                     
 
 
@@ -761,13 +775,13 @@ public class TrapTool : PlaceableTool
 
                     //_CreaturesInRange[i].gameObject.SetActive(false);
                     clone.GetComponent<NavMeshAgent>().enabled = false;
-                    //clone.GetComponent<BehaviourTreeRunner>().enabled = false;
+                    clone.GetComponent<BehaviourTreeRunner>().enabled = false;
                     clone.RemoveClone();
                     _CreaturesInRange.RemoveAt(i);
                     i--;
                 }
             }
-            if (_NoClones)
+            if (_NoClones && _CreaturesInRange.Count > 0)
             {
 
                 _CreaturesInRange[0].GetComponent<Collider>().enabled = false;

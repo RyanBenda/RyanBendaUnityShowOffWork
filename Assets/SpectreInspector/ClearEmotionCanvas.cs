@@ -12,7 +12,7 @@ public class ClearEmotionCanvas : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -21,6 +21,8 @@ public class ClearEmotionCanvas : MonoBehaviour
         _Timer += Time.deltaTime;
 
         if (_Timer >= _TimeTillInactive)
+        {
             this.gameObject.SetActive(false);
+        }
     }
 }

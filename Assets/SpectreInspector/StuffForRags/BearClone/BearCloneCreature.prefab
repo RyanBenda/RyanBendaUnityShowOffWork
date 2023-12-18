@@ -2721,7 +2721,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2693340222959564643}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.510769, z: 0}
+  m_LocalPosition: {x: 0, y: -0.655, z: 0}
   m_LocalScale: {x: 1.5384616, y: 1.5384616, z: 1.5384616}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6411,7 +6411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ThrowableItems:
-  - {fileID: 4628740481982099245, guid: 43c468494d35c86498e63772a7be6071, type: 3}
+  - {fileID: 1343912761347317238, guid: b987260e500a75a41bf71cb30159ce03, type: 3}
   _AttackPlayer: 0
   _ForceMultiplier: 100
   _ThrowableStartPos: {fileID: 5707801140015649645}
