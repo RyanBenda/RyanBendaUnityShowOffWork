@@ -113,7 +113,7 @@ public class PlayerStats : MonoBehaviour
                 _FadingToClear = false;
                 _FadeToBlack.gameObject.SetActive(false);
                 player._PlayerState = PlayerStates.PlayState;
-                _FootstepSource.volume = footVol;
+                //_FootstepSource.volume = footVol;
 
                 
 
