@@ -10,81 +10,75 @@ public class CameraTool : HandheldTool
     public static CameraTool CameraInstance;
 
     public List<CreatureBrain> _Creatures;
-    //public CompendiumButtonComponent[] _CompendiumButtons;
 
-    public float _blipIntervals;
-    public Canvas _radarPanel;
-    public float _maxDistance = 10f;
+    [SerializeField] private float _blipIntervals;
+    [SerializeField] private Canvas _radarPanel;
+    [SerializeField] private float _maxDistance = 10f;
     float timer = 0;
 
-    public GameObject[] _CreaturesDot;
+    //public GameObject[] _CreaturesDot;
 
-    public GameObject _player;
-    public Camera _Cam;
+    [SerializeField] private GameObject _player;
+    [SerializeField] private Camera _Cam;
     float _fov;
 
-    public GameObject _spritePrefab;
-
-    List<GameObject> Blips = new List<GameObject>();
-
-    GameObject _TrackerTool;
+    [SerializeField] private GameObject _spritePrefab;
 
     public GameObject _CameraToolUI;
     CameraToolUI _CameraToolUIScript;
     public GameObject _StandardUI;
 
-    public GameObject _TrackerToolPrefab;
-    public GameObject _UIPrefab;
+    [SerializeField] private GameObject _TrackerToolPrefab;
+    [SerializeField] private GameObject _UIPrefab;
 
-    public AudioClip[] _OpeningClips;
-    public AudioClip[] _ZoomInClips;
-    public AudioClip[] _ZoomOutClips;
-    public AudioSource _source;
+    [SerializeField] private AudioClip[] _OpeningClips;
+    [SerializeField] private AudioClip[] _ZoomInClips;
+    [SerializeField] private AudioClip[] _ZoomOutClips;
+    [SerializeField] private AudioSource _source;
 
+    [SerializeField] private GameObject _RaycastShoot;
+    [SerializeField] private PlayerInput _PlayerInput;
 
-    public GameObject _RaycastShoot;
-    public PlayerInput _PlayerInput;
+    [SerializeField] private HotBarPos _ToolSlot;
 
-    public HotBarPos _ToolSlot;
-
-    public Image _FadeToBlack;
+    [SerializeField] private Image _FadeToBlack;
     bool _FadingToBlack;
     bool _FadingToClear;
     float ToBlack;
     float ToClear;
 
-    public float _TimeToBlack = 1;
-    public float _TimeToClear = 1;
-    public float _TimeIsBlack = 2;
+    [SerializeField] private float _TimeToBlack = 1;
+    [SerializeField] private float _TimeToClear = 1;
+    [SerializeField] private float _TimeIsBlack = 2;
 
     bool _RemovingCamera;
 
     bool _GogglesOn;
 
-    public Animator _ToolAnimator;
-    public GameObject[] _CameraObjects;
+    [SerializeField] private Animator _ToolAnimator;
+    [SerializeField] private GameObject[] _CameraObjects;
 
     bool _PreventSwap;
 
-    public LayerMask _HitTargetLayermask;
-    public LayerMask _GhostCheckLayermask;
+    [SerializeField] private LayerMask _HitTargetLayermask;
+    [SerializeField] private LayerMask _GhostCheckLayermask;
 
     [Header("Photo Taker")]
     [SerializeField] private Image PhotoDisplayArea;
     [SerializeField] private PhotoPopInEffect photoFrame;
 
     private Texture2D[] screenCaptures = new Texture2D[16];
-    //private Texture2D screenCapture2;
+
     int screenCapturesIndex = 0;
 
     private bool viewingPhoto;
 
-    public GameObject[] _UiToHide;
+    [SerializeField] private GameObject[] _UiToHide;
 
-    public GameObject _TooltipUI;
-    public GameObject _CrosshairUI;
+    [SerializeField] private GameObject _TooltipUI;
+    [SerializeField] private GameObject _CrosshairUI;
 
-    public CameraPhotosPage _PhotoPage;
+    [SerializeField] private CameraPhotosPage _PhotoPage;
 
     public Plane[] planes;
 
@@ -286,6 +280,7 @@ public class CameraTool : HandheldTool
         }
         else
         {
+            // zooming of camera
             if (_Cam.fieldOfView - Input.mouseScrollDelta.y * 2 >= 10 && _Cam.fieldOfView - Input.mouseScrollDelta.y * 2 <= 90 && _PlayerControl._PlayerState == PlayerStates.PlayState)
             {
                 _Cam.fieldOfView -= Input.mouseScrollDelta.y * 2;
@@ -321,6 +316,8 @@ public class CameraTool : HandheldTool
         }
     }
 
+    // Takes Photo at the end of the frame so all rendering
+    // and post processing is done before photo is taken
     IEnumerator CapturePhoto()
     {
 
@@ -355,7 +352,7 @@ public class CameraTool : HandheldTool
         StartCoroutine(CapturePhoto());
     }
 
-
+    // Displays photo to player
     void ShowPhoto()
     {
         AudioClip audioClip = _OpeningClips[Random.Range(0, _OpeningClips.Length - 1)];
@@ -371,8 +368,6 @@ public class CameraTool : HandheldTool
 
         if (screenCapturesIndex == 16)
             screenCapturesIndex = 0;
-
-
 
         PhotoDisplayArea.sprite = photoSprite;
 
@@ -397,8 +392,6 @@ public class CameraTool : HandheldTool
         
     }
 
-
-
     void DoSnap(InputAction.CallbackContext obj)
     {
         if (_PlayerControl._PlayerState == PlayerStates.PlayState)
@@ -415,14 +408,10 @@ public class CameraTool : HandheldTool
     {
         Unequip();
     }
-
-
     public void SpawnUI()
     {
         base.Equip();
     }
-
-    
 
     public void RemoveCamera()
     {
@@ -442,8 +431,6 @@ public class CameraTool : HandheldTool
     {
         RemoveCamera();
     }
-
-
 
     public void UnequipCamera()
     {
@@ -485,5 +472,4 @@ public class CameraTool : HandheldTool
     {
         base.DetermineToolSwap();
     }
-
 }

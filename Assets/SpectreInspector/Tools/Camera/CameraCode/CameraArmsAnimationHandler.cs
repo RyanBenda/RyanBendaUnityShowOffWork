@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CameraArmsAnimationHandler : MonoBehaviour
 {
-    public CameraTool _Camera;
-    public GameObject _CameraModel;
-    public GameObject _HandsModel;
+    [SerializeField] private CameraTool _Camera;
+    [SerializeField] private GameObject _CameraModel;
+    [SerializeField] private GameObject _HandsModel;
 
     public void BeginFade()
     {
