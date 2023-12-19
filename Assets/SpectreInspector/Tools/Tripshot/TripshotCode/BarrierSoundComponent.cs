@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BarrierSoundComponent : MonoBehaviour
 {
-    public AudioSource _AudioSource;
+    [SerializeField] private AudioSource _AudioSource;
 
     float timeTillNextZap;
     float t;

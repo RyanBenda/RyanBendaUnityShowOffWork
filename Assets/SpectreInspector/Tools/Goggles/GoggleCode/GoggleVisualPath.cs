@@ -18,8 +18,6 @@ public class GoggleVisualPath : MonoBehaviour
     public NavMeshAgent _Agent;
     public TrailRenderer _TrailRenderer;
 
-    BearRoom[] _BearRooms;
-
     // Start is called before the first frame update
     private void OnEnable()
     {

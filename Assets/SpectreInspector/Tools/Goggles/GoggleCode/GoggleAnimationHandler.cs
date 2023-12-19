@@ -23,17 +23,4 @@ public class GoggleAnimationHandler : MonoBehaviour
         _GoggleModel.SetActive(true);
         _HandsModel.SetActive(true);
     }
-
-    //public void SwapTool()
-    //{
-    //    _Goggles._ToolAnimator.SetBool("Unequiping", false);
-    //    transform.root.GetComponent<PlayerControl>()._CurrentTool = null;
-    //    _Goggles.gameObject.SetActive(false);
-    //    if (_Goggles._SwappingTool != null)
-    //    {
-    //        _Goggles._SwappingTool.gameObject.SetActive(true);
-    //        _Goggles._SwappingTool = null;
-    //    }
-    //}
-
 }

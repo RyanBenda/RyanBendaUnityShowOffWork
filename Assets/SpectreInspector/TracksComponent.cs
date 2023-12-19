@@ -8,7 +8,6 @@ struct TrackStruct
     public Vector3 scale;
 }
 
-
 public class TracksComponent : MonoBehaviour
 {
     List<TrackStruct> _Tracks = new List<TrackStruct>();
@@ -18,7 +17,6 @@ public class TracksComponent : MonoBehaviour
 
     bool _RemoveTrack;
 
-    // Start is called before the first frame update
     void Awake()
     {
         for (int i = 0; i < this.transform.childCount; i++)
@@ -29,7 +27,6 @@ public class TracksComponent : MonoBehaviour
             transform.scale = this.transform.GetChild(i).localScale;
 
             _Tracks.Add(transform);
-
 
             this.transform.GetChild(i).localPosition = Vector3.zero;
             this.transform.GetChild(i).localScale = new Vector3(0, 1, 0);
@@ -68,12 +65,9 @@ public class TracksComponent : MonoBehaviour
                 this.transform.GetChild(i).localPosition = Vector3.Lerp(this.transform.GetChild(i).localPosition, Vector3.zero, t);
                 this.transform.GetChild(i).localScale = Vector3.Lerp(this.transform.GetChild(i).localScale, new Vector3(0, 1, 0), t);
             }
-
         }
         else if (t > 1 && _RemoveTrack)
         {
-            // REMOVE FROM GOGGLE LIST
-
             this.gameObject.SetActive(false);
         }
     }

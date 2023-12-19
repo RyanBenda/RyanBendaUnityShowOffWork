@@ -92,7 +92,6 @@ public class TrapTool : PlaceableTool
         CaughtCreatureBanner = FindObjectOfType<CaughtPrefabComponent>(true);
     }
 
-
     public void RemoveTrap()
     {
         _ToolPlaced = false;
@@ -231,6 +230,13 @@ public class TrapTool : PlaceableTool
                 _CreaturesInRange[i]._RunRandomly = false;
             }
 
+            SpawnTrackingComponent _SPC = _CreaturesInRange[i].GetComponent<SpawnTrackingComponent>();
+
+            if (_SPC)
+            {
+                _SPC.RemoveAllTracks();
+            }
+
             _CreaturesInRange[i].gameObject.SetActive(false);
             _CreaturesInRange.Remove(_CreaturesInRange[i]);
 
@@ -242,7 +248,6 @@ public class TrapTool : PlaceableTool
         _Countdown.transform.parent.gameObject.SetActive(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (_ToolPlaced && playerControl._PlayerState == PlayerStates.PlayState)

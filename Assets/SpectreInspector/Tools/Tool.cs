@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class Tool : MonoBehaviour
 {
-    //public WeaponWheelButton _weaponWheelButton;
-
     [HideInInspector]
     public bool _ToolSelected;
-    //public Vector3 _HandHeldDistFromCam;
-    //public Vector3 _HandHeldRot;
 
     [HideInInspector]
     public GameObject _ToolUI;

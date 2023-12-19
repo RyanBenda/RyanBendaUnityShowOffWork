@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class TrapHandsAnimationsHandler : MonoBehaviour
 {
+    HandHeldTrap _HandHeldTrapScript;
     public GameObject _HandHeldTrap;
     public GameObject _TrapModel;
 
+    private void Awake()
+    {
+        _HandHeldTrapScript = _HandHeldTrap.GetComponent<HandHeldTrap>();
+    }
+
     public void PickedUpTool()
     {
-        _HandHeldTrap.GetComponent<HandHeldTrap>()._ToolAnimator.SetBool("PickingUp", false);
+        _HandHeldTrapScript._ToolAnimator.SetBool("PickingUp", false);
     }
 
     public void HideTrap()
@@ -24,20 +30,20 @@ public class TrapHandsAnimationsHandler : MonoBehaviour
 
     public void DisableHands()
     {
-        if (_HandHeldTrap.GetComponent<HandHeldTrap>()._ToolAnimator.GetBool("Placing") == true && _HandHeldTrap.GetComponent<HandHeldTrap>()._ToolAnimator.GetBool("PickingUp") == false)
+        if (_HandHeldTrapScript._ToolAnimator.GetBool("Placing") == true && _HandHeldTrapScript._ToolAnimator.GetBool("PickingUp") == false)
             _HandHeldTrap.gameObject.SetActive(false);
     }
 
     public void UnequipTool()
     {
-        _HandHeldTrap.GetComponent<HandHeldTrap>()._ToolAnimator.SetBool("Unequiping", false);
+        _HandHeldTrapScript._ToolAnimator.SetBool("Unequiping", false);
         ToolManager.instance._CurrentTool = null;
 
         _HandHeldTrap.SetActive(false);
-        if (_HandHeldTrap.GetComponent<HandHeldTrap>()._SwappingTool != null)
+        if (_HandHeldTrapScript._SwappingTool != null)
         {
-            _HandHeldTrap.GetComponent<HandHeldTrap>()._SwappingTool.gameObject.SetActive(true);
-            _HandHeldTrap.GetComponent<HandHeldTrap>()._SwappingTool = null;
+            _HandHeldTrapScript._SwappingTool.gameObject.SetActive(true);
+            _HandHeldTrapScript._SwappingTool = null;
         }
 
     }

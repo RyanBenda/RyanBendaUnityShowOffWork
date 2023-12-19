@@ -4,8 +4,6 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.AI;
 using System.Linq;
-//using UnityEditor.PackageManager;
-//using UnityEditor.IMGUI.Controls;
 
 [RequireComponent(typeof(LineRenderer))]
 public class TrapLineRendererManager : MonoBehaviour
@@ -13,7 +11,7 @@ public class TrapLineRendererManager : MonoBehaviour
     [HideInInspector]
     public LineRenderer _LineRenderer;
 
-    public TrapTool _TrapTool;
+    [SerializeField] private TrapTool _TrapTool;
 
     [SerializeField] private float _LineBends = 2;
 

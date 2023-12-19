@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-//using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -10,8 +9,6 @@ using UnityEngine.UI;
 public class GoggleTool : HandheldTool
 {
     [Header("First Time Lines:")]
-    
-    private bool DoneDialogue = false;
 
     [Header("other:")]
     public Image _FadeToBlack;
@@ -27,19 +24,12 @@ public class GoggleTool : HandheldTool
 
     bool _RemovingGoggles;
 
-    //public FootprintObjectPools _FootPrintPoolObject;
-    //public List<SpriteRenderer> _FootPrints= new List<SpriteRenderer>();
-
     public Animator _ToolAnimator;
     public GameObject[] _GogglesObjects;
-
-    public List<GameObject> _OtherTools = new List<GameObject>();
 
     bool _PreventSwap;
     public HotBarPos _ToolSlot;
 
-
-    public Outline[] _OutlineObjects;
 
     public List<GameObject> pooledPaths;
     public GameObject pathsToPool;
@@ -73,8 +63,6 @@ public class GoggleTool : HandheldTool
             playerControl = FindObjectOfType<PhysicsPlayerController>();
 
         _Rooms = FindObjectsOfType<GhostRoom>();
-
-        
     }
 
     public GameObject GetPooledObject()
@@ -87,7 +75,6 @@ public class GoggleTool : HandheldTool
             }
         }
 
-
         return null;
     }
 
@@ -96,8 +83,6 @@ public class GoggleTool : HandheldTool
     {
         if (playerControl == null)
             playerControl = Camera.main.transform.parent.GetComponent<PhysicsPlayerController>();
-
-        
 
         bool _delayToolSwap = false;
         if (ToolManager.instance._CurrentTool != null && ToolManager.instance._CurrentTool != this)
@@ -178,14 +163,14 @@ public class GoggleTool : HandheldTool
                     _FadingToClear = true;
                     _GoggleScan.SetActive(true);
 
-                    for (int i = 0; i < _OutlineObjects.Length; i++)
-                    {
-                        _OutlineObjects[i].enabled = true;
-                    }
-
                     for (int i = 0; i < _GogglesObjects.Length; i++)
                     {
                         _GogglesObjects[i].SetActive(false);
+                    }
+
+                    for (int i = 0; i < FootprintObjectPools.FootprintInstance.pooledObjects.Count; i++)
+                    {
+                        FootprintObjectPools.FootprintInstance.pooledObjects[i].GetComponentInChildren<SpriteRenderer>().enabled = true;
                     }
                 }
             }
@@ -218,7 +203,6 @@ public class GoggleTool : HandheldTool
                             trail.SetActive(true);
                             trail.GetComponent<GoggleVisualPath>()._Agent.destination = _Rooms[i].transform.position;
                         }
-                        
                     }
                 }
             }
@@ -240,11 +224,6 @@ public class GoggleTool : HandheldTool
                     _GoggleScan.SetActive(false);
                     _ToolAnimator.SetBool("Unequipping", true);
 
-                    for (int i = 0; i < _OutlineObjects.Length; i++)
-                    {
-                        _OutlineObjects[i].enabled = false;
-                    }
-
                     for (int i = 0; i < _GogglesObjects.Length; i++)
                     {
                         _GogglesObjects[i].SetActive(true);
@@ -253,6 +232,11 @@ public class GoggleTool : HandheldTool
                     for (int i = 0; i < pooledPaths.Count; i++)
                     {
                         pooledPaths[i].gameObject.SetActive(false);
+                    }
+
+                    for (int i = 0; i < FootprintObjectPools.FootprintInstance.pooledObjects.Count; i++)
+                    {
+                        FootprintObjectPools.FootprintInstance.pooledObjects[i].GetComponentInChildren<SpriteRenderer>().enabled = false;
                     }
 
                 }
@@ -300,8 +284,6 @@ public class GoggleTool : HandheldTool
         ToolManager.instance._CurrentTool = null;
         ToolManager.instance._HoldingTool = false;
 
-
-
         if (_SwappingTool != null)
         {
             _SwappingTool.gameObject.SetActive(true);
@@ -333,5 +315,4 @@ public class GoggleTool : HandheldTool
     {
         RemoveGoggles();
     }
-
 }

@@ -207,7 +207,6 @@ public class HandHeldTrap : PlaceableTool
         }
     }
 
-
     private void DoPrimaryAction(InputAction.CallbackContext obj)
     {
         if(_ToolGhostExists)

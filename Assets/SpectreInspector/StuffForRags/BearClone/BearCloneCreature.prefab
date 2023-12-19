@@ -6543,9 +6543,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   _TracksCount: 10
-  _GoggleOnly: 0
-  Footprints: 1
-  Pages: 0
+  _GoggleOnly: 1
 --- !u!114 &4769840763655063039
 MonoBehaviour:
   m_ObjectHideFlags: 0

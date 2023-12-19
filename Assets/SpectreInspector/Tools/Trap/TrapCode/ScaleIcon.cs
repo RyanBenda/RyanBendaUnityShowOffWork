@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class ScaleIcon : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    public float sizeOnScreen;
+    [SerializeField] private float sizeOnScreen;
 
     void Update()
     {

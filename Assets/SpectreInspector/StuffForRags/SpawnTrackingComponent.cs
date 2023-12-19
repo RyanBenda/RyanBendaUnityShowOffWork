@@ -4,28 +4,16 @@ using UnityEngine;
 
 public class SpawnTrackingComponent : MonoBehaviour
 {
-    //public GameObject _TrackingPrefab;
-
-    public float _TimeBetweenSpawns = 5;
+    [SerializeField] private float _TimeBetweenSpawns = 5;
     float t = 0;
 
-    public LayerMask _LayerMask;
+    [SerializeField] private LayerMask _LayerMask;
 
     List<GameObject> _Tracks = new List<GameObject>();
-    public float _TracksCount = 10;
+    [SerializeField] private float _TracksCount = 10;
 
     public bool _GoggleOnly;
 
-    public bool Footprints = true;
-    public bool Pages = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         t += Time.deltaTime;
@@ -36,20 +24,13 @@ public class SpawnTrackingComponent : MonoBehaviour
 
             if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 1000, _LayerMask))
             {
-                //Debug.Log(hit.collider.name);
-
                 while (_Tracks.Count >= _TracksCount)
                 {
                     _Tracks[0].GetComponent<TracksComponent>().RemoveTrack();
                     _Tracks.RemoveAt(0);
                 }
 
-                GameObject newTrack = null;
-
-                //if (Footprints)
-                    //newTrack = FootprintObjectPools.FootprintInstance.GetPooledObject();
-                //else if (Pages)
-                    //newTrack = PagesObjectPool.PagesInstance.GetPooledObject();
+                GameObject newTrack = FootprintObjectPools.FootprintInstance.GetPooledObject();
 
                 if (newTrack != null)
                 {
@@ -57,19 +38,24 @@ public class SpawnTrackingComponent : MonoBehaviour
                     newTrack.transform.forward = this.transform.forward;
                     newTrack.SetActive(true);
 
-                    if (_GoggleOnly && Camera.main.transform.GetComponentInChildren<GoggleTool>(true).gameObject.activeSelf == false)
+                    if (_GoggleOnly && ToolManager.instance._GoggleTool.gameObject.activeSelf == false)
                     {
-                        // send track to Goggles
                         newTrack.GetComponentInChildren<SpriteRenderer>().enabled = false;
-                        //Camera.main.transform.GetComponentInChildren<GoggleTool>()._FootPrints.Add(newTrack.GetComponentInChildren<SpriteRenderer>());
                     }
 
                     _Tracks.Add(newTrack);
                 }
-                
             }
 
             t = 0;
+        }
+    }
+
+    public void RemoveAllTracks()
+    {
+        foreach (GameObject track in _Tracks)
+        {
+            track.GetComponent<TracksComponent>().RemoveTrack();
         }
     }
 }

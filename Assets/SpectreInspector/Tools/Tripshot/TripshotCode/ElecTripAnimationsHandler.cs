@@ -6,22 +6,27 @@ using DG.Tweening;
 
 public class ElecTripAnimationsHandler : MonoBehaviour
 {
-
+    HandHeldTripShot _HandHeldTripShotScript;
     public GameObject _HandHeldTripShot;
     public GameObject _TripshotModel;
+
+    private void Awake()
+    {
+        _HandHeldTripShotScript = _HandHeldTripShot.GetComponent<HandHeldTripShot>();
+    }
 
     public void SetInactive()
     {
 
-        if (_HandHeldTripShot.GetComponent<HandHeldTripShot>()._ToolAnimator.GetBool("Placing") == true)
+        if (_HandHeldTripShotScript._ToolAnimator.GetBool("Placing") == true)
         {
-            _HandHeldTripShot.GetComponent<HandHeldTripShot>()._ToolAnimator.SetBool("Placing", false);
+            _HandHeldTripShotScript._ToolAnimator.SetBool("Placing", false);
 
-            if (_HandHeldTripShot.GetComponent<HandHeldTripShot>()._Tripshot)
+            if (_HandHeldTripShotScript._Tripshot)
             {
-                _HandHeldTripShot.GetComponent<HandHeldTripShot>()._Tripshot.gameObject.SetActive(true);
-                _HandHeldTripShot.GetComponent<HandHeldTripShot>()._Tripshot.Equip();
-                _HandHeldTripShot.GetComponent<HandHeldTripShot>()._Tripshot._HandHeldTripShot = _HandHeldTripShot.GetComponent<HandHeldTripShot>();
+                _HandHeldTripShotScript._Tripshot.gameObject.SetActive(true);
+                _HandHeldTripShotScript._Tripshot.Equip();
+                _HandHeldTripShotScript._Tripshot._HandHeldTripShot = _HandHeldTripShotScript;
                 ToolManager.instance._HoldingTool = false;
             }
 
@@ -33,7 +38,7 @@ public class ElecTripAnimationsHandler : MonoBehaviour
     public void PickedUpTool()
     {
 
-        _HandHeldTripShot.GetComponent<HandHeldTripShot>()._ToolAnimator.SetBool("PickingUp", false);
+        _HandHeldTripShotScript._ToolAnimator.SetBool("PickingUp", false);
     }
 
     public void HideTripshot()
@@ -48,23 +53,23 @@ public class ElecTripAnimationsHandler : MonoBehaviour
 
     public void UnequipTool()
     {
-        _HandHeldTripShot.GetComponent<HandHeldTripShot>()._ToolAnimator.SetBool("Unequiping", false);
+        _HandHeldTripShotScript._ToolAnimator.SetBool("Unequiping", false);
         ToolManager.instance._CurrentTool = null;
 
        
 
         _HandHeldTripShot.SetActive(false);
-        if (_HandHeldTripShot.GetComponent<HandHeldTripShot>()._SwappingTool != null)
+        if (_HandHeldTripShotScript._SwappingTool != null)
         {
-            _HandHeldTripShot.GetComponent<HandHeldTripShot>()._SwappingTool.gameObject.SetActive(true);
-            _HandHeldTripShot.GetComponent<HandHeldTripShot>()._SwappingTool = null;
+            _HandHeldTripShotScript._SwappingTool.gameObject.SetActive(true);
+            _HandHeldTripShotScript._SwappingTool = null;
         }
 
     }
 
     public void DisableHands()
     {
-        if (_HandHeldTripShot.GetComponent<HandHeldTripShot>()._ToolAnimator.GetBool("Placing") == true && _HandHeldTripShot.GetComponent<HandHeldTripShot>()._ToolAnimator.GetBool("PickingUp") == false)
+        if (_HandHeldTripShotScript._ToolAnimator.GetBool("Placing") == true && _HandHeldTripShotScript._ToolAnimator.GetBool("PickingUp") == false)
             _HandHeldTripShot.gameObject.SetActive(false);
     }
 }

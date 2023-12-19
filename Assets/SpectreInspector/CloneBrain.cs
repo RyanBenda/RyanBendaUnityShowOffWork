@@ -5,23 +5,24 @@ using UnityEngine.AI;
 
 public class CloneBrain : MonoBehaviour
 {
-
     public SkinnedMeshRenderer _hat;
     public CreatureObjectPooling _Pooler;
     [HideInInspector]
     public bool _HasBeenCaught = false;
 
-    public GameObject _ParticleSystemPrefab;
+    [SerializeField] private GameObject _ParticleSystemPrefab;
     float T;
     bool removeClone;
     [HideInInspector]
     public bool _BeingSetInactive;
 
     public NavMeshAgent _Agent;
-    public CreatureBrain _Brain;
+    [SerializeField] private CreatureBrain _Brain;
     bool _RemoveClone;
 
-    public bool _AllowAttack = true;
+    [SerializeField] private SpawnTrackingComponent _SpawnTrackingComponent;
+
+    [SerializeField] private bool _AllowAttack = true;
 
     // Start is called before the first frame update
     void Awake()
@@ -46,6 +47,13 @@ public class CloneBrain : MonoBehaviour
             GetComponent<NavMeshAgent>().enabled = true;
             _RemoveClone = false;
             _Brain.isDizzy = false;
+
+            if (_SpawnTrackingComponent == null)
+                _SpawnTrackingComponent = this.GetComponent<SpawnTrackingComponent>();
+
+            if (_SpawnTrackingComponent != null)
+                _SpawnTrackingComponent.RemoveAllTracks();
+
             this.gameObject.SetActive(false);
             
         }
